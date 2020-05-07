@@ -1,0 +1,14 @@
+{
+  "name": "epam-node-js-training",
+  "version": "1.0.0",
+  "description": "Epam node js training",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aleksei Bulgak",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
