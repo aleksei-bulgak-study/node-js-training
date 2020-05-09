@@ -26,6 +26,7 @@
     "prettier": "^2.0.5"
   },
   "dependencies": {
-    "csvtojson": "^2.0.10"
+    "csvtojson": "^2.0.10",
+    "split": "^1.0.1"
   }
 }
