@@ -1,8 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const csv = require('csvtojson');
+const csv = require('csvtojson/v2');
 const { pipeline, Writable } = require('stream');
-const split = require('split');
 
 const filePath = '../../assets/task1.2/csv/';
 const csvFile = path.join(__dirname, filePath, 'nodejs-hw1-ex1.csv');
@@ -10,6 +9,8 @@ const destinationFile = path.join(__dirname, filePath, 'output.txt');
 
 const readableStream = fs.createReadStream(csvFile);
 const writableStream = fs.createWriteStream(destinationFile);
+
+readableStream.on('data', (data) => console.log(data.toString()));
 
 readableStream.on('error', (error) => {
   console.error('Failed to load file due to error', error);
@@ -22,7 +23,9 @@ readableStream.on('close', () => writableStream.end());
 
 const customWriterWithTimeout = new Writable({
   write(chunk, encoding, callback) {
-    // console.log(chunk.toString());
+    console.log('chunck');
+    console.log(chunk.toString());
+
     writableStream.write(chunk, encoding);
     callback();
   },
@@ -33,7 +36,7 @@ const customWriterWithTimeout = new Writable({
   },
 });
 
-pipeline(readableStream, split(), csv(), customWriterWithTimeout, (error) => {
+pipeline(readableStream, csv(), customWriterWithTimeout, (error) => {
   console.log(error);
 });
 
