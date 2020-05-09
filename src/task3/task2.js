@@ -10,8 +10,12 @@ const destinationFile = path.join(__dirname, filePath, 'output.txt');
 const readableStream = fs.createReadStream(csvFile);
 const writableStream = fs.createWriteStream(destinationFile);
 
-readableStream.on('error', (error) => console.error('Failed to load file due to error', error));
-writableStream.on('error', (error) => console.error('Failed to write into file due to error', error));
+readableStream.on('error', (error) => {
+  console.error('Failed to load file due to error', error);
+});
+writableStream.on('error', (error) => {
+  console.error('Failed to write into file due to error', error);
+});
 
 const onError = (error) => {
   console.log(error);
@@ -24,13 +28,8 @@ const onSuccess = () => {
   writableStream.close();
 };
 
-const writeLine = (json) => writableStream.write(JSON.stringify(json) + os.EOL, 'utf-8');
-
-const writeLineWithTimeout = (json, timeout = 0) => {
-  writeLine(json);
-  return new Promise((res) => {
-    setTimeout(() => res(), timeout);
-  });
+const writeLine = (json) => {
+  writableStream.write(JSON.stringify(json) + os.EOL, 'utf-8');
 };
 
 csv()
