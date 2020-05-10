@@ -4,7 +4,8 @@
   "description": "Emap node js training/express-js",
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint ./dist --ext .js,.ts",
+    "lint": "eslint ./src --ext .js,.ts",
+    "lint:ts": "eslint -c .eslintrc.ts.json ./src/**/*.ts",
     "build:watch": "tsc --build --watch tsconfig.json",
     "build": "tsc --build tsconfig.json && babel ./dist -d dist",
     "build:babel": "babel --extensions '.ts' ./src -d dist",
@@ -27,6 +28,7 @@
     "@types/hapi__joi": "^17.1.0",
     "@types/uuid": "^7.0.3",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
+    "@typescript-eslint/parser": "^2.31.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "^6.11.0",

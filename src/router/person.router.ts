@@ -10,14 +10,14 @@ class PersonRouter implements RouterWrapper {
   readonly path: string;
   readonly service: PersonService;
 
-  constructor(service: PersonService, path: string = '/') {
+  constructor(service: PersonService, path = '/') {
     this.router = Router();
     this.path = path;
     this.service = service;
     this.init();
   }
 
-  private init() {
+  private init(): void {
     this.router.get('/:id', (req, res) => {
       const result = this.service.getById(req.params.id);
       res.status(200).json(result);
@@ -43,14 +43,14 @@ class PersonRouter implements RouterWrapper {
     });
 
     this.router.get('/', (req, res) => {
-      let { loginSubstring = '', limit } = req.query;
-      let loginArgument = loginSubstring.toString();
+      const { loginSubstring = '', limit } = req.query;
+      const loginArgument = loginSubstring.toString();
       const result = this.service.getAutoSuggestUsers(loginArgument, +limit);
       res.status(200).json(result);
     });
   }
 
-  validatePerson(person: any, validator: ObjectSchema<Person>) {
+  validatePerson(person: Person, validator: ObjectSchema<Person>): void {
     const result = validator.validate(person);
     if (result.error) {
       throw new InternalError(result.error.message, ErrorType.BAD_REQUEST);

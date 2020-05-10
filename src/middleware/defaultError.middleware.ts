@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 
-export default (error: Error, request: Request, response: Response, next: NextFunction) => {
+export default (error: Error, request: Request, response: Response): void => {
   response.status(500).json({ message: error.message });
 };

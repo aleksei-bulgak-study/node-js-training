@@ -40,7 +40,7 @@ class PersonService {
   }
 
   delete(id: string): Person {
-    const person = this.people.find((person) => person.id === id);
+    const person = this.people.find((user) => user.id === id);
     if (person) {
       person.isDeleted = true;
       return person;

@@ -16,7 +16,7 @@ const createPersonSchema = Joi.object({
   isDeleted: Joi.boolean().required(),
 });
 
-interface Person {
+export default interface Person {
   id: string;
   login: string;
   password: string;
@@ -25,4 +25,3 @@ interface Person {
 }
 
 export { fullPersonSchema, createPersonSchema };
-export default Person;
