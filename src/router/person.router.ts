@@ -1,10 +1,9 @@
 import { Router } from 'express';
 import { ObjectSchema } from '@hapi/joi';
-import PersonService from '../service/person.service';
+import { PersonService } from '../service';
 import RouterWrapper from './router.interface';
-import Person, { fullPersonSchema, createPersonSchema } from '../model/person.model';
-import InternalError from '../error/internal.error';
-import ErrorType from '../model/error.type';
+import { Person, ErrorType, fullPersonSchema, createPersonSchema } from '../model';
+import { InternalError } from '../error';
 
 class PersonRouter implements RouterWrapper {
   readonly router: Router;

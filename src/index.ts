@@ -1,6 +1,6 @@
 import App from './app';
-import PersonService from './service/person.service';
-import PersonRouter from './router/person.router';
+import { PersonService } from './service';
+import { PersonRouter } from './router';
 import { internalErrorMidleware, defaultErrorMiddleware } from './middleware';
 
 const personService = new PersonService();

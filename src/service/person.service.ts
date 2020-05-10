@@ -1,6 +1,5 @@
-import Person from '../model/person.model';
-import InternalError from '../error/internal.error';
-import ErrorType from '../model/error.type';
+import { Person, ErrorType } from '../model';
+import { InternalError } from '../error';
 import { v4 as uuidv4 } from 'uuid';
 
 class PersonService {

@@ -1,6 +1,6 @@
 import express, { ErrorRequestHandler } from 'express';
-import { Application, RequestHandler, Router } from 'express';
-import RouterWrapper from './router/router.interface';
+import { Application, RequestHandler } from 'express';
+import { RouterWrapper } from './router';
 
 class App {
   private app: Application;
@@ -12,7 +12,10 @@ class App {
   ) {
     this.app = express();
     this.app.use(express.json());
-    // this.app.use(...middlewares);
+    if (middlewares && middlewares.length) {
+      console.log('test');
+      this.app.use(...middlewares);
+    }
     routes.forEach((router) => this.app.use(router.path, router.router));
     this.app.use(...exceptionHandlers);
   }

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import InternalError from '../error/internal.error';
+import { InternalError } from '../error';
 
 export default (error: Error, request: Request, response: Response, next: NextFunction) => {
   if (error instanceof InternalError) {
