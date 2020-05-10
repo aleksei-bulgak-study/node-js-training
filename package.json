@@ -6,9 +6,8 @@
   "scripts": {
     "lint": "eslint ./src --ext .js,.ts",
     "lint:ts": "eslint -c .eslintrc.ts.json ./src/**/*.ts",
-    "build:watch": "tsc --build --watch tsconfig.json",
-    "build": "tsc --build tsconfig.json && babel ./dist -d dist",
-    "build:babel": "babel --extensions '.ts' ./src -d dist",
+    "build:ts:watch": "tsc --build --watch tsconfig.json",
+    "build": "babel --watch --extensions '.ts' ./src -d dist",
     "start": "nodemon run dist/index.js --verbose"
   },
   "dependencies": {

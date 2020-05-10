@@ -13,5 +13,4 @@ const personRouter = new PersonRouter(personService, '/users');
 const errorHandlers = [internalErrorMidleware, defaultErrorMiddleware];
 
 const app = new App([], [personRouter], errorHandlers);
-console.log(port);
 app.start(port);
