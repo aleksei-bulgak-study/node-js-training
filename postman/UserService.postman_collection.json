@@ -1,0 +1,127 @@
+{
+	"info": {
+		"_postman_id": "50416212-ca2b-40ff-b5ed-b3f4d5eb3423",
+		"name": "UserService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/users/75ddf527-d0e5-44ff-9bc3-1e72dc6c4fa2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"75ddf527-d0e5-44ff-9bc3-1e72dc6c4fa2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"login\": \"ederson\",\n\t\"password\": \"123456\",\n\t\"age\": 28,\n\t\"isDeleted\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/users",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/users/75ddf527-d0e5-44ff-9bc3-1e72dc6c4fa2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"75ddf527-d0e5-44ff-9bc3-1e72dc6c4fa2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/users?limit=10&lo",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "lo",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"login\": \"ederson\",\n    \"password\": \"123456\",\n    \"age\": 28\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/users/a78e293c-96ed-4b67-a2a1-cba694e8c51f",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"a78e293c-96ed-4b67-a2a1-cba694e8c51f"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
