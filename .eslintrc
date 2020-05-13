@@ -2,6 +2,7 @@
   "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module",
+    "ecmaVersion": 2019,
     "allowImportExportEverywhere": false,
     "ecmaFeatures": {
       "globalReturn": false

@@ -1,5 +1,5 @@
-const readline = require('readline');
-const os = require('os');
+import readline from 'readline';
+import os from 'os';
 
 const readLineStream = readline.createInterface(process.stdin);
 const writeLineStream = process.stdout;

@@ -1,5 +1,5 @@
 import fs from 'fs';
-import path from 'path';
+import path, { __dirname } from 'path';
 import os from 'os';
 import csv from 'csvtojson';
 

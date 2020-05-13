@@ -1,5 +1,3 @@
-const stringReverse = require('./stringReverse');
+import stringReverse from './stringReverse';
 
-module.exports = {
-  stringReverse,
-};
+export default stringReverse;

@@ -1,7 +1,7 @@
-const fs = require('fs');
-const path = require('path');
-const csv = require('csvtojson/v2');
-const { pipeline, Writable } = require('stream');
+import fs from 'fs';
+import path, { __dirname } from 'path';
+import csv from 'csvtojson/v2';
+import { pipeline, Writable } from 'stream';
 
 const filePath = '../../assets/task1.2/csv/';
 const csvFile = path.join(__dirname, filePath, 'nodejs-hw1-ex1.csv');

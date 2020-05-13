@@ -1,5 +1,3 @@
-const csvToJson = require('./csvToJson');
+import csvToJson from './csvToJson';
 
-module.exports = {
-  csvToJson,
-};
+export default csvToJson;
