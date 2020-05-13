@@ -3,11 +3,11 @@ import path from 'path';
 import os from 'os';
 import csv from 'csvtojson';
 
-const filePath = '../../assets/task1.2/csv/';
-// eslint-disable-next-line no-undef
-const csvFile = path.join(__dirname, filePath, 'nodejs-hw1-ex1.csv');
-// eslint-disable-next-line no-undef
-const destinationFile = path.join(__dirname, filePath, 'output.txt');
+const rootFolder = path.resolve('.');
+const filePath = './assets/task1.2/csv/';
+
+const csvFile = path.join(rootFolder, filePath, 'nodejs-hw1-ex1.csv');
+const destinationFile = path.join(rootFolder, filePath, 'output.txt');
 
 const readableStream = fs.createReadStream(csvFile);
 const writableStream = fs.createWriteStream(destinationFile);

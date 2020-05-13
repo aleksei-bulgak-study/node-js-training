@@ -16,10 +16,9 @@
     "commonjs": true,
     "es6": true
   },
-  "extends": ["prettier", "airbnb-base", "plugin:node/recommended"],
+  "extends": ["prettier", "airbnb-base"],
   "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": ["error"],
     "no-console": "off"
   }
 }

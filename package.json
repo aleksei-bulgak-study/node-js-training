@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "description": "Epam node js training",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "lint": "eslint src/",
     "build": "babel ./src -d dist",
     "task1": "npm run build && nodemon ./dist/task1/stringReverse",
     "task2": "npm run build && nodemon ./dist/task2/csvToJson",
-    "test2:pipes": "npm run build && nodemon ./dist/task2/csvToJsonPipeline"
+    "test2:pipes": "npm run build && nodemon ./dist/task2"
   },
   "author": "Aleksei Bulgak",
   "license": "MIT",
