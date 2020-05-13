@@ -1,10 +1,12 @@
 import fs from 'fs';
-import path, { __dirname } from 'path';
+import path from 'path';
 import csv from 'csvtojson/v2';
 import { pipeline, Writable } from 'stream';
 
 const filePath = '../../assets/task1.2/csv/';
+// eslint-disable-next-line no-undef
 const csvFile = path.join(__dirname, filePath, 'nodejs-hw1-ex1.csv');
+// eslint-disable-next-line no-undef
 const destinationFile = path.join(__dirname, filePath, 'output.txt');
 
 const readableStream = fs.createReadStream(csvFile);
