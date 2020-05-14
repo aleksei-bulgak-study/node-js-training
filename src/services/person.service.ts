@@ -1,15 +1,19 @@
-import { Person, ErrorType } from '../model';
-import { InternalError } from '../error';
+/* eslint no-sync: "off" */
+import { Person, ErrorType, InternalError } from '../models';
 import { v4 as uuidv4 } from 'uuid';
+import PersonService from './person.interface';
 
-class PersonService {
+class PersonInMemoryService implements PersonService {
   private people: Array<Person>;
 
   constructor() {
     this.people = new Array<Person>();
   }
 
-  getById(id: string): Person {
+  getById(id: string): Promise<Person> {
+    return Promise.resolve(this.getByIdSync(id));
+  }
+  getByIdSync(id: string): Person {
     if (id) {
       const results = this.people.filter((person) => person.id === id);
       if (!results || results.length === 0) {
@@ -22,34 +26,44 @@ class PersonService {
     throw new InternalError('Invalid id was specified', ErrorType.NOT_FOUND);
   }
 
-  create(user: Person): Person {
+  create(user: Person): Promise<Person> {
     if (this.isUserValid(user)) {
       user.id = uuidv4().toString();
       user.isDeleted = false;
       this.people.push(user);
-      return user;
+      return Promise.resolve(user);
     }
     throw new InternalError('Invalid user was specified', ErrorType.BAD_REQUEST);
   }
 
+<<<<<<< HEAD:src/service/person.service.ts
   getAutoSuggestUsers(loginSubstring: string, limit: number): Person[] {
     return this.people
       .filter(({ login }) => login.match(`.*${loginSubstring}.*`))
       .sort()
       .slice(0, limit ? limit : undefined);
+=======
+  getAutoSuggestUsers(loginSubstring: string, limit: number): Promise<Person[]> {
+    return Promise.resolve(
+      this.people
+        .filter(({ login }) => login.match(`.*${loginSubstring}.*`))
+        .sort((first, second) => (first.login > second.login ? 1 : -1))
+        .slice(0, limit ? limit : undefined)
+    );
+>>>>>>> 6f60289... feat: initial implementation for task 3:src/services/person.service.ts
   }
 
-  delete(id: string): Person {
+  delete(id: string): Promise<Person> {
     const person = this.people.find((user) => user.id === id);
     if (person) {
       person.isDeleted = true;
-      return person;
+      return Promise.resolve(person);
     }
     throw new InternalError(`Person with id ${id} was not found`, ErrorType.BAD_REQUEST);
   }
 
-  update(person: Person): Person {
-    const currentPerson = this.getById(person.id);
+  update(person: Person): Promise<Person> {
+    const currentPerson = this.getByIdSync(person.id);
     if (person.login && currentPerson.login !== person.login) {
       this.isUserValid(person);
     }
@@ -57,7 +71,7 @@ class PersonService {
     currentPerson.password = person.password ? person.password : currentPerson.password;
     currentPerson.isDeleted = person.isDeleted ? person.isDeleted : currentPerson.isDeleted;
     currentPerson.age = person.age ? person.age : currentPerson.age;
-    return currentPerson;
+    return Promise.resolve(currentPerson);
   }
 
   private isUserValid(user: Person): boolean {
@@ -80,4 +94,4 @@ class PersonService {
   }
 }
 
-export default PersonService;
+export default PersonInMemoryService;
