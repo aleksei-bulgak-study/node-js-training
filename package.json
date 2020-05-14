@@ -6,9 +6,9 @@
   "scripts": {
     "lint": "eslint ./src --ext .js,.ts",
     "lint:ts": "eslint -c .eslintrc.ts.json ./src/**/*.ts",
-    "build:ts:watch": "tsc --build --watch tsconfig.json",
-    "build": "babel --watch --extensions '.ts' ./src -d dist",
-    "start": "nodemon run dist/index.js --verbose"
+    "build:ts": "tsc --build --watch tsconfig.json",
+    "build": "babel --extensions '.ts' ./src -d dist",
+    "start": "npm run lint:ts && nodemon --exec babel-node --extensions '.ts' src/index.ts"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
