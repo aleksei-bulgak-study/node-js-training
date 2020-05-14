@@ -8,7 +8,7 @@
     "build": "babel ./src -d dist",
     "task1": "npm run lint && npm run build && nodemon ./dist/task1/stringReverse",
     "task2": "npm run lint && npm run build && nodemon ./dist/task2/csvToJson",
-    "task2:pipes": "npm run lint && npm run build && nodemon ./dist/task2"
+    "task2:pipes": "npm run lint && nodemon --exec babel-node ./src/task2"
   },
   "author": "Aleksei Bulgak",
   "license": "MIT",
