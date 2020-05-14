@@ -1,4 +1,4 @@
-import ErrorType from '../model/error.type';
+import ErrorType from '../error.type';
 
 class InternalError extends Error {
   public readonly type: ErrorType;

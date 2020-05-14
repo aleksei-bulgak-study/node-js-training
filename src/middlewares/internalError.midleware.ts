@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { InternalError } from '../error';
+import { InternalError } from '../models';
 
 const internalError = (
   error: Error,
