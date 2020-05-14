@@ -27,8 +27,6 @@ const convertCsvToJson = () => {
     .pipe(
       csv({
         noheader: false,
-        headers: ['Book', 'Author', 'Amount', 'Price'],
-        ignoreColumns: /(Amount)/,
         alwaysSplitAtEOL: true,
       }),
     )
