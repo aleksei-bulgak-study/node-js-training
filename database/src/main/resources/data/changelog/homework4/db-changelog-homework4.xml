@@ -1,0 +1,34 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  <changeSet id="2" author="aleksei.bulgak">
+    <sqlFile path="./permission-table.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false" />
+    <rollback>
+      <sqlFile path="./rollback/permission-table[rollback].sql" relativeToChangelogFile="true" />
+    </rollback>
+  </changeSet>
+
+  <changeSet id="3" author="aleksei.bulgak">
+    <sqlFile path="./group-table.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false" />
+    <rollback>
+      <sqlFile path="./rollback/group-table[rollback].sql" relativeToChangelogFile="true" />
+    </rollback>
+  </changeSet>
+
+  <changeSet id="4" author="aleksei.bulgak">
+    <sqlFile path="./group-permission-table.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false" />
+    <rollback>
+      <sqlFile path="./rollback/group-permission-table[rollback].sql" relativeToChangelogFile="true" />
+    </rollback>
+  </changeSet>
+
+  <changeSet id="5" author="aleksei.bulgak">
+    <sqlFile path="./permission-add.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false" />
+  </changeSet>
+
+  <changeSet id="6" author="aleksei.bulgak">
+    <sqlFile path="./user-group-table.sql" relativeToChangelogFile="true" splitStatements="false" />
+    <rollback>
+      <sqlFile path="./rollback/user-group-table[rollback].sql" relativeToChangelogFile="true" />
+    </rollback>
+  </changeSet>
+</databaseChangeLog>
