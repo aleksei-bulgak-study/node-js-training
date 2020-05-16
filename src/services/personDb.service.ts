@@ -13,7 +13,10 @@ export default class PersonDBService implements PersonService {
   async getById(id: string): Promise<Person> {
     if (id) {
       try {
-        return await this.dao.getById(id);
+        const result = await this.dao.getById(id);
+        if (!result) {
+          throw new InternalError(`Failed to obtain user with id ${id}`, ErrorType.INTERNAL);
+        }
       } catch (err) {
         console.error('Failed to obtain person due to error');
         throw new InternalError(`Failed to obtain user with id ${id}`, ErrorType.INTERNAL);
