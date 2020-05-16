@@ -16,7 +16,6 @@
     <liquibase-maven-plugin.version>3.9.0</liquibase-maven-plugin.version>
 
     <changeLogFile>src/main/resources/data/changelog/db.changelog-master.xml</changeLogFile>
-    <propertyFile>src/main/resources/liquibase.properties</propertyFile>
   </properties>
 
   <dependencies>
@@ -52,8 +51,6 @@
                 </goals>
                 <configuration>
                   <changeLogFile>${changeLogFile}</changeLogFile>
-                  <propertyFileWillOverride>true</propertyFileWillOverride>
-                  <propertyFile>${propertyFile}</propertyFile>
                 </configuration>
               </execution>
             </executions>
@@ -72,8 +69,6 @@
             <version>${liquibase-maven-plugin.version}</version>
             <configuration>
               <changeLogFile>${changeLogFile}</changeLogFile>
-              <propertyFileWillOverride>true</propertyFileWillOverride>
-              <propertyFile>${propertyFile}</propertyFile>
             </configuration>
             <executions>
               <execution>
@@ -98,8 +93,6 @@
             <version>${liquibase-maven-plugin.version}</version>
             <configuration>
               <changeLogFile>${changeLogFile}</changeLogFile>
-              <propertyFileWillOverride>true</propertyFileWillOverride>
-              <propertyFile>${propertyFile}</propertyFile>
               <rollbackCount>1</rollbackCount>
             </configuration>
             <executions>
@@ -127,7 +120,6 @@
           <configuration>
             <changeLogFile>${changeLogFile}</changeLogFile>
             <propertyFileWillOverride>true</propertyFileWillOverride>
-            <propertyFile>${propertyFile}</propertyFile>
             <driver>org.postgresql.Driver</driver>
             <url>${env.DB_URL}</url>
             <username>${env.DB_USERNAME}</username>
