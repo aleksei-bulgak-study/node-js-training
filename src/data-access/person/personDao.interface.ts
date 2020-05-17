@@ -1,4 +1,5 @@
-import { Person } from '../models';
+import { Person } from '../../models';
+import { Model } from 'sequelize';
 
 export default interface PersonDao {
   getById(id: string): Promise<Person>;
@@ -6,4 +7,7 @@ export default interface PersonDao {
   update(person: Person): Promise<void>;
   find(login: string, limit: number): Promise<Person[]>;
   findByLogin(login: string): Promise<Person>;
+  findAll(userIds: Array<string>): Promise<Person[]>;
+
+  getModel(): typeof Model;
 }

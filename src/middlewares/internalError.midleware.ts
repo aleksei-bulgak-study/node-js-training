@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { InternalError } from '../models';
+import { InternalError, NotFoundError } from '../models';
 
 const internalError = (
   error: Error,
@@ -9,6 +9,8 @@ const internalError = (
 ): void => {
   if (error instanceof InternalError) {
     response.status(error.type).json({ message: error.message });
+  } else if (error instanceof NotFoundError) {
+    response.status(404).json({ message: error.message });
   }
   next(error);
 };

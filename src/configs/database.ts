@@ -1,6 +1,6 @@
 import { Sequelize, Model } from 'sequelize';
 
-export default (dbUrl: string): typeof Model => {
+export default (dbUrl: string): Sequelize => {
   const sequelize = new Sequelize(dbUrl, {
     dialect: 'postgres',
     dialectOptions: {
