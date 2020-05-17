@@ -1,0 +1,145 @@
+{
+	"info": {
+		"_postman_id": "41ce5ea0-c00e-451c-8f0f-52c789b6c5f0",
+		"name": "GroupService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/groups",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"{{$guid}}\",\n\t\"name\": \"test-{{$guid}}\",\n\t\"permissions\": [\"READ\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/groups",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/groups/bc78d813-2501-46fc-85a2-8cb3bbc7df61",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"groups",
+						"bc78d813-2501-46fc-85a2-8cb3bbc7df61"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"bb37ba6c-b49d-4854-90d0-283f14e9bfec\",\n    \"name\": \"test-741d229c-e9e5-40dc-bc09-3c64f612c80b\",\n    \"permissions\": [\n        \"SHARE\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/groups/bb37ba6c-b49d-4854-90d0-283f14e9bfec",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"groups",
+						"bb37ba6c-b49d-4854-90d0-283f14e9bfec"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/groups/bb37ba6c-b49d-4854-90d0-283f14e9bfec",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"groups",
+						"bb37ba6c-b49d-4854-90d0-283f14e9bfec"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add users to group",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\"8a666132-6e60-4647-ba33-e4aa85f828ab\", \"9476bc55-7351-4ca0-b70f-dd8c8d0dff51\"]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/groups/bb37ba6c-b49d-4854-90d0-283f14e9bfec/users/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"groups",
+						"bb37ba6c-b49d-4854-90d0-283f14e9bfec",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
