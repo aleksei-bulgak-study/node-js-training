@@ -1,3 +1,3 @@
 import InternalError from './internal.error';
-
-export { InternalError };
+import NotFoundError from './notFound.error';
+export { InternalError, NotFoundError };

@@ -1,9 +1,8 @@
 CREATE SEQUENCE permission_id_seq;
 
 CREATE TABLE permission (
-  id      INT NOT NULL DEFAULT NEXTVAL('permission_id_seq'),
-  value   VARCHAR(20) UNIQUE NOT NULL,
-
+  id INT NOT NULL DEFAULT NEXTVAL('permission_id_seq'),
+  value VARCHAR(20) UNIQUE NOT NULL,
   PRIMARY KEY(id)
 );
 

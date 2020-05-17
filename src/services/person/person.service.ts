@@ -1,5 +1,5 @@
 /* eslint no-sync: "off" */
-import { Person, ErrorType, InternalError } from '../models';
+import { Person, ErrorType, InternalError } from '../../models';
 import { v4 as uuidv4 } from 'uuid';
 import PersonService from './person.interface';
 
@@ -8,6 +8,10 @@ class PersonInMemoryService implements PersonService {
 
   constructor() {
     this.people = new Array<Person>();
+  }
+
+  getUsers(users: string[]): Promise<Person[]> {
+    return Promise.resolve(this.people.filter((user) => users.indexOf(user.id)));
   }
 
   getById(id: string): Promise<Person> {

@@ -40,3 +40,4 @@ dist
 database
 index.html
 .env
+**/secrets.sh

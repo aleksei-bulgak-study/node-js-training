@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express';
 
 import PersonService from '../services';
-import { fullPersonSchema, createPersonSchema } from '../models';
-import { validatePerson } from '../middlewares/personValidation.middleware';
+import { fullPersonSchema, createPersonSchema, Person } from '../models';
+import { validate } from '../middlewares/validation.middleware';
 import asyncMiddleware from '../middlewares/async.middleware';
 
 export const PersonRouter = (service: PersonService): Router => {
@@ -11,36 +11,32 @@ export const PersonRouter = (service: PersonService): Router => {
   router.get(
     '/:id',
     asyncMiddleware(async (req: Request, res: Response) => {
-      const result = await service.getById(req.params.id);
-      res.status(200).json(result);
+      return service.getById(req.params.id).then((result) => res.status(200).json(result));
     })
   );
 
   router.post(
     '/',
-    validatePerson(createPersonSchema),
+    validate<Person>(createPersonSchema),
     asyncMiddleware(async (req: Request, res: Response) => {
-      const result = await service.create(req.body);
-      res.status(201).json(result);
+      return service.create(req.body).then((result) => res.status(201).json(result));
     })
   );
 
   router.put(
     '/:id',
-    validatePerson(fullPersonSchema),
+    validate<Person>(fullPersonSchema),
     asyncMiddleware(async (req: Request, res: Response) => {
       const person = req.body;
       person.id = req.params.id;
-      const result = await service.update(person);
-      res.status(200).json(result);
+      return service.update(person).then((result) => res.status(200).json(result));
     })
   );
 
   router.delete(
     '/:id',
     asyncMiddleware(async (req: Request, res: Response) => {
-      const result = await service.delete(req.params.id);
-      res.status(200).json(result);
+      return service.delete(req.params.id).then((result) => res.status(200).json(result));
     })
   );
 
@@ -49,8 +45,9 @@ export const PersonRouter = (service: PersonService): Router => {
     asyncMiddleware(async (req: Request, res: Response) => {
       const { loginSubstring = '', limit } = req.query;
       const loginArgument = loginSubstring.toString();
-      const result = await service.getAutoSuggestUsers(loginArgument, +limit);
-      res.status(200).json(result);
+      return service
+        .getAutoSuggestUsers(loginArgument, +limit)
+        .then((result) => res.status(200).json(result));
     })
   );
 

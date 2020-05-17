@@ -1,5 +1,5 @@
 import { DataTypes, Model, BuildOptions } from 'sequelize';
-import { sequelize } from '../configs';
+import { sequelize } from '../../configs';
 
 interface PersonModel extends Model {
   readonly id: string;

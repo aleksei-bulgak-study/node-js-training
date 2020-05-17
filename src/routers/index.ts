@@ -1,3 +1,4 @@
 import { PersonRouter } from './person.router';
+import GroupRouter from './group.router';
 
-export { PersonRouter };
+export { PersonRouter, GroupRouter };
