@@ -11,13 +11,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/users/75ddf527-d0e5-44ff-9bc3-1e72dc6c4fa2",
+					"raw": "{{host}}/users/8920b9e3-e1ec-4976-93be-f3e9c4b2b835",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"users",
-						"75ddf527-d0e5-44ff-9bc3-1e72dc6c4fa2"
+						"8920b9e3-e1ec-4976-93be-f3e9c4b2b835"
 					]
 				}
 			},
@@ -30,7 +30,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"login\": \"ederson\",\n\t\"password\": \"123456\",\n\t\"age\": 28,\n\t\"isDeleted\": false\n}",
+					"raw": "{\n\t\"login\": \"alesei.bulgak\",\n\t\"password\": \"123456\",\n\t\"age\": 28,\n\t\"isDeleted\": false\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -55,13 +55,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/users/75ddf527-d0e5-44ff-9bc3-1e72dc6c4fa2",
+					"raw": "{{host}}/users/8a666132-6e60-4647-ba33-e4aa85f828ab",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"users",
-						"75ddf527-d0e5-44ff-9bc3-1e72dc6c4fa2"
+						"8a666132-6e60-4647-ba33-e4aa85f828ab"
 					]
 				}
 			},
@@ -73,7 +73,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{host}}/users?limit=10&lo",
+					"raw": "http://{{host}}/users?limit=10",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -87,8 +87,9 @@
 							"value": "10"
 						},
 						{
-							"key": "lo",
-							"value": null
+							"key": "loginSubstring",
+							"value": "a",
+							"disabled": true
 						}
 					]
 				}
@@ -102,7 +103,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"login\": \"ederson\",\n    \"password\": \"123456\",\n    \"age\": 28\n}",
+					"raw": "{\n    \"login\": \"test\",\n    \"password\": \"123456\",\n    \"age\": 28,\n    \"isDeleted\": false\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -110,13 +111,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/users/a78e293c-96ed-4b67-a2a1-cba694e8c51f",
+					"raw": "{{host}}/users/9476bc55-7351-4ca0-b70f-dd8c8d0dff51",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"users",
-						"a78e293c-96ed-4b67-a2a1-cba694e8c51f"
+						"9476bc55-7351-4ca0-b70f-dd8c8d0dff51"
 					]
 				}
 			},
