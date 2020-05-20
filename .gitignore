@@ -39,3 +39,5 @@ dist
 
 .env
 **/secrets.sh
+logs
+.env
