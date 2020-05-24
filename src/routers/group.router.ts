@@ -69,7 +69,11 @@ class GroupRouter implements RouterWrapper {
     );
   }
 
-  validate(group: Group, validator: ObjectSchema<Group>): void {
+  isSecured(): boolean {
+    return true;
+  }
+
+  private validate(group: Group, validator: ObjectSchema<Group>): void {
     const result = validator.validate(group);
     if (result.error) {
       throw new InternalError(result.error.message, ErrorType.BAD_REQUEST);

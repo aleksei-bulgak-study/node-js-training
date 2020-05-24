@@ -84,6 +84,20 @@ export default class PersonDBService implements PersonService {
     return this.dao.find(loginSubstring, limit);
   }
 
+  getByLogin(login: string): Promise<Person> {
+    return this.dao
+      .findByLogin(login)
+      .then((person) => {
+        if (!person) {
+          throw new NotFoundError(`Failed to obtain user with login ${login}`);
+        }
+        return person;
+      })
+      .catch(() => {
+        throw new NotFoundError(`Failed to obtain user with login ${login}`);
+      });
+  }
+
   private async checkUserValid(user: Person): Promise<void> {
     if (!user || !user.login || !user.password) {
       throw new InternalError('User login or password is invalid', ErrorType.BAD_REQUEST);

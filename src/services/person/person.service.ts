@@ -85,8 +85,24 @@ class PersonInMemoryService implements PersonService {
     return true;
   }
 
-  private getByLogin(value: string): Person {
-    return this.people.filter(({ login }) => login === value)[0];
+  public getByLogin(login: string): Promise<Person> {
+    return new Promise((resolve, reject) => {
+      if (login) {
+        const results = this.people.filter((person) => person.login === login);
+        if (!results || results.length === 0) {
+          reject(
+            new InternalError(
+              `User with specified login ${login} was not found`,
+              ErrorType.NOT_FOUND
+            )
+          );
+        }
+        if (results && results.length === 1) {
+          return resolve(results[0]);
+        }
+      }
+      reject(new InternalError('Invalid id was specified', ErrorType.NOT_FOUND));
+    });
   }
 }
 

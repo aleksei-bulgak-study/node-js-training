@@ -5,15 +5,20 @@ import Permission from './permission.model';
 import { fullPersonSchema, createPersonSchema } from './person.model';
 import { groupSchema } from './group.model';
 import { InternalError, NotFoundError } from './errors';
+import AuthRequest, { authRequestSchema } from './authRequest.model';
+import AuthToken from './authToken.model';
 
 export {
   ErrorType,
   Person,
   Permission,
   Group,
+  AuthRequest,
+  AuthToken,
   fullPersonSchema,
   createPersonSchema,
   groupSchema,
+  authRequestSchema,
   InternalError,
   NotFoundError,
 };

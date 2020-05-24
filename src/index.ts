@@ -1,5 +1,6 @@
-import * as dotenv from 'dotenv';
+import cors from 'cors';
 import App from './app';
+import { DB_URL, APP_PORT, JWT_SECRET } from './configs/env';
 import { databaseConfig, loggerService } from './configs';
 import { PersonDbService } from './services';
 import { PersonDaoImpl, GroupDaoImpl, PermissionDaoImpl } from './data-access';
@@ -9,16 +10,14 @@ import {
   defaultErrorMiddleware,
   errorLogMiddleware,
   requestLogMiddleware,
+  authentificationMiddleware,
 } from './middlewares';
 import { GroupServiceImpl } from './services/group/group.service';
 import { winstonMiddleware } from './configs/logger';
+import AuthorizationRouter from './routers/authorization.router';
+import { AuthService } from './services/authorization.service';
 
-dotenv.config();
-const dbUrl = process.env.DB_URL ? process.env.DB_URL : '';
-const portString = process.env.PORT ? process.env.PORT : '0';
-const port: number = Number.parseInt(portString);
-
-const sequelize = databaseConfig(dbUrl, loggerService);
+const sequelize = databaseConfig(DB_URL, loggerService);
 const personDao = new PersonDaoImpl(sequelize);
 const permissionDao = new PermissionDaoImpl(sequelize);
 const groupDao = new GroupDaoImpl(sequelize, personDao, permissionDao);
@@ -26,15 +25,24 @@ const personService = new PersonDbService(personDao);
 const personRouter = new PersonRouter(personService, '/users');
 const groupService = new GroupServiceImpl(groupDao, personService);
 const groupRouter = new GroupRouter(groupService, '/groups');
-const middlewares = [winstonMiddleware, requestLogMiddleware(loggerService)];
+const middlewares = [cors(), winstonMiddleware, requestLogMiddleware(loggerService)];
 const errorHandlers = [
   errorLogMiddleware(loggerService),
   internalErrorMidleware,
   defaultErrorMiddleware(loggerService),
 ];
 
-const app = new App(middlewares, [personRouter, groupRouter], errorHandlers);
-app.start(port);
+const authService = new AuthService(personService, loggerService, JWT_SECRET);
+const authRouter = new AuthorizationRouter(authService, '/login');
+const authMiddleware = authentificationMiddleware(authService);
+
+const app = new App(
+  middlewares,
+  [personRouter, groupRouter, authRouter],
+  errorHandlers,
+  authMiddleware
+);
+app.start(APP_PORT);
 
 process.on('uncaughtException', (err) => {
   loggerService.error('Uncaught exception was thrown due to', err);
@@ -42,5 +50,5 @@ process.on('uncaughtException', (err) => {
 });
 
 process.on('unhandledRejection', () => {
-  loggerService.error('Unhandler rejectio error was thrown due to');
+  loggerService.error('Unhandler rejection error was thrown due to');
 });

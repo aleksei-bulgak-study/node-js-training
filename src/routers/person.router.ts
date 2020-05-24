@@ -62,6 +62,10 @@ class PersonRouter implements RouterWrapper {
     );
   }
 
+  isSecured(): boolean {
+    return true;
+  }
+
   private validatePerson(person: Person, validator: ObjectSchema<Person>): void {
     const result = validator.validate(person);
     if (result.error) {
