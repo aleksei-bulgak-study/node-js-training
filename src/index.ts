@@ -25,7 +25,7 @@ const personService = new PersonDbService(personDao);
 const personRouter = new PersonRouter(personService, '/users');
 const groupService = new GroupServiceImpl(groupDao, personService);
 const groupRouter = new GroupRouter(groupService, '/groups');
-const middlewares = [cors(), winstonMiddleware, requestLogMiddleware(loggerService)];
+const middlewares = [cors({ origin: '*' }), winstonMiddleware, requestLogMiddleware(loggerService)];
 const errorHandlers = [
   errorLogMiddleware(loggerService),
   internalErrorMidleware,
