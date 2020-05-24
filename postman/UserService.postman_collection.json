@@ -31,14 +31,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/v1/users/9476bc55-7351-4ca0-b70f-dd8c8d0dff5s",
+							"raw": "{{host}}/v1/users/6c996808-6829-4879-b64a-596c6359c5d2",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v1",
 								"users",
-								"9476bc55-7351-4ca0-b70f-dd8c8d0dff5s"
+								"6c996808-6829-4879-b64a-596c6359c5d2"
 							]
 						}
 					},
@@ -77,14 +77,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/v1/users/8a666132-6e60-4647-ba33-e4aa85f828sa",
+							"raw": "{{host}}/v1/users/6c996808-6829-4879-b64a-596c6359c5d2",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v1",
 								"users",
-								"8a666132-6e60-4647-ba33-e4aa85f828sa"
+								"6c996808-6829-4879-b64a-596c6359c5d2"
 							]
 						}
 					},
@@ -137,7 +137,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\": \"2b074600-02c8-4131-882d-084e847a75a5\",\n    \"login\": \"test\",\n    \"password\": \"123456\",\n    \"age\": 28,\n    \"isDeleted\": false\n}",
+							"raw": "{\n\t\"id\": \"2b074600-02c8-4131-882d-084e847a75a5\",\n    \"login\": \"aleksei.bulgak\",\n    \"password\": \"123456\",\n    \"age\": 28,\n    \"isDeleted\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -145,14 +145,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/v1/users/7e2ed06f-38ec-4bb7-b76e-9a98ffd1cc52",
+							"raw": "{{host}}/v1/users/6c996808-6829-4879-b64a-596c6359c5d2",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v1",
 								"users",
-								"7e2ed06f-38ec-4bb7-b76e-9a98ffd1cc52"
+								"6c996808-6829-4879-b64a-596c6359c5d2"
 							]
 						}
 					},
@@ -168,33 +168,25 @@
 					"name": "getById",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
 								"value": "{{token}}",
-								"type": "text",
-								"disabled": true
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{host}}/v2/users/9476bc55-7351-4ca0-b70f-dd8c8d0dff5s",
+							"raw": "{{host}}/v2/users/9476bc55-7351-4ca0-b70f-dd8c8d0dff51",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v2",
 								"users",
-								"9476bc55-7351-4ca0-b70f-dd8c8d0dff5s"
+								"9476bc55-7351-4ca0-b70f-dd8c8d0dff51"
 							]
 						}
 					},
@@ -204,10 +196,16 @@
 					"name": "create",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"login\": \"yuru.shulhat\",\n\t\"password\": \"87654\",\n\t\"age\": -30,\n\t\"isDeleted\": false\n}",
+							"raw": "{\n\t\"login\": \"yuru.shulhat\",\n\t\"password\": \"87654\",\n\t\"age\": 30,\n\t\"isDeleted\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -233,14 +231,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/v2/users/8a666132-6e60-4647-ba33-e4aa85f828sa",
+							"raw": "{{host}}/v2/users/9476bc55-7351-4ca0-b70f-dd8c8d0dff51",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v2",
 								"users",
-								"8a666132-6e60-4647-ba33-e4aa85f828sa"
+								"9476bc55-7351-4ca0-b70f-dd8c8d0dff51"
 							]
 						}
 					},
@@ -290,7 +288,13 @@
 					"name": "update",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"id\": \"2b074600-02c8-4131-882d-084e847a75a5\",\n    \"login\": \"test\",\n    \"password\": \"123456\",\n    \"age\": 28,\n    \"isDeleted\": false\n}",
@@ -301,14 +305,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/v2/users/7e2ed06f-38ec-4bb7-b76e-9a98ffd1cc52",
+							"raw": "{{host}}/v2/users/9476bc55-7351-4ca0-b70f-dd8c8d0dff51",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v2",
 								"users",
-								"7e2ed06f-38ec-4bb7-b76e-9a98ffd1cc52"
+								"9476bc55-7351-4ca0-b70f-dd8c8d0dff51"
 							]
 						}
 					},

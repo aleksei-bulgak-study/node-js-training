@@ -1,5 +1,5 @@
 import { PersonDbService, PersonService } from './person';
-
-export { PersonDbService };
+import { AuthService } from './authorization.service';
+export { PersonDbService, AuthService };
 
 export default PersonService;

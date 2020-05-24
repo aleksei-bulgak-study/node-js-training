@@ -2,8 +2,8 @@ import { DataTypes, Model, BuildOptions } from 'sequelize';
 import { sequelize } from '../../configs';
 
 export interface PermissionEntityModel extends Model {
-  id: number;
-  value: string;
+  readonly id: number;
+  readonly value: string;
 }
 
 type PermissionEntityModelStatic = typeof Model & {

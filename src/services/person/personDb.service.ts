@@ -2,7 +2,6 @@ import { v4 as uuidv4 } from 'uuid';
 import PersonService from './person.interface';
 import { Person, InternalError, ErrorType, NotFoundError } from '../../models';
 import { PersonDao } from '../../data-access';
-import { PersonModel } from '../../data-access/person/person.entity';
 
 export default class PersonDBService implements PersonService {
   private readonly dao: PersonDao;
@@ -59,7 +58,7 @@ export default class PersonDBService implements PersonService {
   async update(person: Person): Promise<Person> {
     const personEntity = await this.getById(person.id);
     if (person.login && personEntity.login !== person.login) {
-      this.checkUserValid(person);
+      await this.checkUserValid(person);
     } else {
       await this.dao.update(person);
     }
@@ -78,6 +77,20 @@ export default class PersonDBService implements PersonService {
 
   getAutoSuggestUsers(loginSubstring: string, limit: number): Promise<Person[]> {
     return this.dao.find(loginSubstring, limit);
+  }
+
+  getByLogin(login: string): Promise<Person> {
+    return this.dao
+      .findByLogin(login)
+      .then((person) => {
+        if (!person) {
+          throw new NotFoundError(`Failed to obtain user with login ${login}`);
+        }
+        return person;
+      })
+      .catch(() => {
+        throw new NotFoundError(`Failed to obtain user with login ${login}`);
+      });
   }
 
   private async checkUserValid(user: Person): Promise<void> {

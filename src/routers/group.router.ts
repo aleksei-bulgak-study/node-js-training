@@ -63,5 +63,3 @@ export const GroupRouter = (service: GroupService): Router => {
 
   return router;
 };
-
-export default GroupRouter;

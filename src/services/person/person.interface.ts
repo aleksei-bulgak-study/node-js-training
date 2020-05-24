@@ -7,4 +7,5 @@ export default interface PersonService {
   update(person: Person): Promise<Person>;
   delete(id: string): Promise<Person>;
   getAutoSuggestUsers(loginSubstring: string, limit: number): Promise<Person[]>;
+  getByLogin(login: string): Promise<Person>;
 }

@@ -9,13 +9,20 @@
 			"name": "get",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": "{{host}}/groups",
+					"raw": "{{host}}/v1/groups",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"v1",
 						"groups"
 					]
 				}
@@ -37,11 +44,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/groups",
+					"raw": "{{host}}/v1/groups",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"v1",
 						"groups"
 					]
 				}
@@ -54,13 +62,14 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/groups/bc78d813-2501-46fc-85a2-8cb3bbc7df61",
+					"raw": "{{host}}/v1/groups/bb37ba6c-b49d-4854-90d0-283f14e9bfec",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"v1",
 						"groups",
-						"bc78d813-2501-46fc-85a2-8cb3bbc7df61"
+						"bb37ba6c-b49d-4854-90d0-283f14e9bfec"
 					]
 				}
 			},
@@ -81,11 +90,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/groups/bb37ba6c-b49d-4854-90d0-283f14e9bfec",
+					"raw": "{{host}}/v1/groups/bb37ba6c-b49d-4854-90d0-283f14e9bfec",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"v1",
 						"groups",
 						"bb37ba6c-b49d-4854-90d0-283f14e9bfec"
 					]
@@ -99,11 +109,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/groups/bb37ba6c-b49d-4854-90d0-283f14e9bfec",
+					"raw": "{{host}}/v1/groups/bb37ba6c-b49d-4854-90d0-283f14e9bfec",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"v1",
 						"groups",
 						"bb37ba6c-b49d-4854-90d0-283f14e9bfec"
 					]
@@ -126,11 +137,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/groups/bb37ba6c-b49d-4854-90d0-283f14e9bfec/users/",
+					"raw": "{{host}}/v1/groups/bb37ba6c-b49d-4854-90d0-283f14e9bfec/users/",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"v1",
 						"groups",
 						"bb37ba6c-b49d-4854-90d0-283f14e9bfec",
 						"users",
