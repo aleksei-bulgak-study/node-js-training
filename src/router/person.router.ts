@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { ObjectSchema } from '@hapi/joi';
+
 import { PersonService } from '../service';
 import RouterWrapper from './router.interface';
-import { Person, ErrorType, fullPersonSchema, createPersonSchema } from '../model';
-import { InternalError } from '../error';
+import { fullPersonSchema, createPersonSchema } from '../model';
+import { validatePerson } from '../middleware/personValidation.middleware';
 
 class PersonRouter implements RouterWrapper {
   readonly router: Router;
@@ -23,16 +23,14 @@ class PersonRouter implements RouterWrapper {
       res.status(200).json(result);
     });
 
-    this.router.post('/', (req, res) => {
-      this.validatePerson(req.body, createPersonSchema);
+    this.router.post('/', validatePerson(createPersonSchema), (req, res) => {
       const result = this.service.create(req.body);
       res.status(201).json(result);
     });
 
-    this.router.put('/:id', (req, res) => {
+    this.router.put('/:id', validatePerson(fullPersonSchema), (req, res) => {
       const person = req.body;
       person.id = req.params.id;
-      this.validatePerson(person, fullPersonSchema);
       const result = this.service.update(person);
       res.status(200).json(result);
     });
@@ -48,13 +46,6 @@ class PersonRouter implements RouterWrapper {
       const result = this.service.getAutoSuggestUsers(loginArgument, +limit);
       res.status(200).json(result);
     });
-  }
-
-  validatePerson(person: Person, validator: ObjectSchema<Person>): void {
-    const result = validator.validate(person);
-    if (result.error) {
-      throw new InternalError(result.error.message, ErrorType.BAD_REQUEST);
-    }
   }
 }
 

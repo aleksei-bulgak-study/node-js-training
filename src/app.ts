@@ -13,7 +13,6 @@ class App {
     this.app = express();
     this.app.use(express.json());
     if (middlewares && middlewares.length) {
-      console.log('test');
       this.app.use(...middlewares);
     }
     routes.forEach((router) => this.app.use(router.path, router.router));
