@@ -1,27 +1,20 @@
-import express, { ErrorRequestHandler } from 'express';
-import { Application, RequestHandler } from 'express';
-import { RouterWrapper } from './router';
+import express, { ErrorRequestHandler, Router } from 'express';
+import { RequestHandler } from 'express';
 
-class App {
-  private app: Application;
-
-  constructor(
-    middlewares: RequestHandler[],
-    routes: RouterWrapper[],
-    exceptionHandlers: ErrorRequestHandler[]
-  ) {
-    this.app = express();
-    this.app.use(express.json());
-    if (middlewares && middlewares.length) {
-      this.app.use(...middlewares);
-    }
-    routes.forEach((router) => this.app.use(router.path, router.router));
-    this.app.use(...exceptionHandlers);
+export default (
+  middlewares: RequestHandler[],
+  routes: Array<Router | RequestHandler>,
+  exceptionHandlers: ErrorRequestHandler[]
+) => {
+  const app = express();
+  app.use(express.json());
+  if (middlewares && middlewares.length) {
+    app.use(...middlewares);
   }
+  routes.forEach((router) => app.use(router));
+  app.use(...exceptionHandlers);
 
-  start(port: Number) {
-    this.app.listen(port);
-  }
-}
-
-export default App;
+  return (port: number) => {
+    app.listen(port);
+  };
+};
