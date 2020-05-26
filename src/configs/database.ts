@@ -1,7 +1,6 @@
 import { Sequelize } from 'sequelize';
 
-export default (): Sequelize => {
-  const dbUrl = process.env.DB_URL ? process.env.DB_URL : '';
+const databaseConfig = (dbUrl: string): Sequelize => {
   const sequelize = new Sequelize(dbUrl, {
     dialect: 'postgres',
     dialectOptions: {
@@ -29,3 +28,12 @@ export default (): Sequelize => {
 
   return sequelize;
 };
+
+const dbUrl = (): string => {
+  if (!process.env.DB_URL) {
+    throw new Error('Failed to start application due to absence of DB_URL variable');
+  }
+  return process.env.DB_URL;
+};
+
+export { databaseConfig, dbUrl };

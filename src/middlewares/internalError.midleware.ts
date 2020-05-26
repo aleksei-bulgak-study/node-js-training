@@ -9,6 +9,7 @@ const internalError = (
 ): void => {
   if (error instanceof InternalError) {
     response.status(error.type).json({ message: error.message });
+    return;
   }
   next(error);
 };

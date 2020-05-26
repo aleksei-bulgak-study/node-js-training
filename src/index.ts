@@ -1,4 +1,3 @@
-import * as dotenv from 'dotenv';
 import express from 'express';
 import { internalErrorMidleware, defaultErrorMiddleware, notFoundMiddleware } from './middlewares';
 import { port, sequelize } from './configs';

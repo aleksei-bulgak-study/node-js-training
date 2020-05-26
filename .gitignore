@@ -37,9 +37,6 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
-<<<<<<< HEAD
 database
 index.html
-=======
->>>>>>> 6f60289... feat: initial implementation for task 3
 .env

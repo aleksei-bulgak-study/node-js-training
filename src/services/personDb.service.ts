@@ -17,6 +17,7 @@ export default class PersonDBService implements PersonService {
         if (!result) {
           throw new InternalError(`Failed to obtain user with id ${id}`, ErrorType.INTERNAL);
         }
+        return result;
       } catch (err) {
         console.error('Failed to obtain person due to error');
         throw new InternalError(`Failed to obtain user with id ${id}`, ErrorType.INTERNAL);
@@ -66,7 +67,6 @@ export default class PersonDBService implements PersonService {
 
     try {
       const results = await this.dao.findByLogin(user.login);
-      console.log('tese', results);
       if (results) {
         throw new InternalError(
           `User with login ${user.login} has already exist`,

@@ -36,13 +36,6 @@ class PersonInMemoryService implements PersonService {
     throw new InternalError('Invalid user was specified', ErrorType.BAD_REQUEST);
   }
 
-<<<<<<< HEAD:src/service/person.service.ts
-  getAutoSuggestUsers(loginSubstring: string, limit: number): Person[] {
-    return this.people
-      .filter(({ login }) => login.match(`.*${loginSubstring}.*`))
-      .sort()
-      .slice(0, limit ? limit : undefined);
-=======
   getAutoSuggestUsers(loginSubstring: string, limit: number): Promise<Person[]> {
     return Promise.resolve(
       this.people
@@ -50,7 +43,6 @@ class PersonInMemoryService implements PersonService {
         .sort((first, second) => (first.login > second.login ? 1 : -1))
         .slice(0, limit ? limit : undefined)
     );
->>>>>>> 6f60289... feat: initial implementation for task 3:src/services/person.service.ts
   }
 
   delete(id: string): Promise<Person> {
