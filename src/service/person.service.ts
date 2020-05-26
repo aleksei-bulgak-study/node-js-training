@@ -35,7 +35,7 @@ class PersonService {
   getAutoSuggestUsers(loginSubstring: string, limit: number): Person[] {
     return this.people
       .filter(({ login }) => login.match(`.*${loginSubstring}.*`))
-      .sort((first, second) => (first.login > second.login ? 1 : -1))
+      .sort()
       .slice(0, limit ? limit : undefined);
   }
 
