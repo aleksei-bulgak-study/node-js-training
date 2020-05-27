@@ -47,9 +47,6 @@ class GroupDaoImpl implements GroupDao {
   delete(id: string): Promise<void> {
     return GroupEntity.destroy({ where: { id } });
   }
-  getModel(): typeof Model {
-    return GroupEntity;
-  }
 }
 
 export { GroupDaoImpl };
