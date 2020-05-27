@@ -31,7 +31,7 @@ export default class PersonDBService implements PersonService {
       user.id = uuidv4().toString();
       user.isDeleted = false;
       await this.dao.create(user);
-      return Promise.resolve(user);
+      return user;
     }
     throw new InternalError('Invalid user was specified', ErrorType.BAD_REQUEST);
   }
@@ -42,7 +42,7 @@ export default class PersonDBService implements PersonService {
       await this.checkUserValid(person);
     }
     await this.dao.update(person);
-    return Promise.resolve(person);
+    return person;
   }
 
   async delete(id: string): Promise<Person> {
@@ -79,6 +79,6 @@ export default class PersonDBService implements PersonService {
       }
     }
 
-    return Promise.resolve(true);
+    return true;
   }
 }
