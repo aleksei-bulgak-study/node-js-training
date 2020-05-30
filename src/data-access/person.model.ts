@@ -1,7 +1,21 @@
-import { Sequelize, DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, BuildOptions } from 'sequelize';
+import { sequelize } from '../configs';
 
-export const PersonEntity = (sequelize: Sequelize): typeof Model => {
-  return sequelize.define('user', {
+interface PersonModel extends Model {
+  readonly id: string;
+  readonly login: string;
+  readonly password: string;
+  readonly age: number;
+  readonly isDeleted: boolean;
+}
+
+type PersonModelStatic = typeof Model & {
+  new (values?: object, options?: BuildOptions): PersonModel;
+};
+
+const PersonEntity = <PersonModelStatic>sequelize.define(
+  'user',
+  {
     id: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -31,5 +45,8 @@ export const PersonEntity = (sequelize: Sequelize): typeof Model => {
       defaultValue: false,
       comment: 'Flag that indicates users status',
     },
-  });
-};
+  },
+  { tableName: 'users' }
+);
+
+export { PersonEntity, PersonModel };

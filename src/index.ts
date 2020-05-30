@@ -1,11 +1,11 @@
 import express from 'express';
 import { internalErrorMidleware, defaultErrorMiddleware, notFoundMiddleware } from './middlewares';
-import { port, sequelize } from './configs';
+import { port } from './configs';
 import { PersonDbService, PersonInMemoryService } from './services';
 import { PersonDaoImpl } from './data-access';
 import { PersonRouter } from './routers';
 
-const personService = new PersonDbService(new PersonDaoImpl(sequelize));
+const personService = new PersonDbService(new PersonDaoImpl());
 const personInMemoryService = new PersonInMemoryService();
 
 const personDatabaseRouter = PersonRouter(personService);
