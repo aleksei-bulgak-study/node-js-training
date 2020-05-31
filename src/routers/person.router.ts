@@ -5,7 +5,7 @@ import { fullPersonSchema, createPersonSchema, Person } from '../models';
 import { validate } from '../middlewares/validation.middleware';
 import asyncMiddleware from '../middlewares/async.middleware';
 
-export const PersonRouter = (service: PersonService): Router => {
+const PersonRouter = (service: PersonService): Router => {
   const router = Router();
 
   router.get(
@@ -56,3 +56,5 @@ export const PersonRouter = (service: PersonService): Router => {
 
   return router;
 };
+
+export { PersonRouter };
