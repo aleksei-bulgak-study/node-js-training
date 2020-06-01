@@ -6,14 +6,18 @@
   "scripts": {
     "lint": "eslint ./src --ext .js,.ts",
     "lint:ts": "eslint -c .eslintrc.ts.json ./src/**/*.ts",
-    "build:ts": "tsc --build --watch tsconfig.json",
+    "build:ts:watch": "tsc --build --watch tsconfig.json",
     "build": "babel --extensions '.ts' ./src -d dist",
-    "start": "npm run lint:ts && nodemon --exec babel-node --extensions '.ts' src/index.ts"
+    "build:watch": "babel --watch --extensions '.ts' ./src -d dist",
+    "start": "nodemon --exec babel-node --extensions '.ts' ./src/index.ts"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "pg": "^8.2.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.8",
     "uuid": "^8.0.0"
   },
   "devDependencies": {

@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import { ObjectSchema } from '@hapi/joi';
-import { Person, ErrorType } from '../model';
-import { InternalError } from '../error';
+import { Person, ErrorType, InternalError } from '../models';
 
 export const validatePerson = (validationSchema: ObjectSchema<Person>): RequestHandler => (
   req: Request,
