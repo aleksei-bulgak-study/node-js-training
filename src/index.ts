@@ -5,6 +5,7 @@ import {
   errorLogMiddleware,
   requestLogMiddleware,
   notFoundMiddleware,
+  serviceLogMiddleware,
 } from './middlewares';
 import { port, loggerService } from './configs';
 import { PersonDbService } from './services';
@@ -12,6 +13,11 @@ import { PersonRouter, GroupRouter } from './routers';
 import { PersonDaoImpl, GroupDaoImpl, PermissionDaoImpl } from './data-access';
 import { GroupServiceImpl } from './services/group/group.service';
 import { winstonMiddleware } from './configs/logger';
+import {
+  startTimeMidleware,
+  endTimeMiddleware,
+  endTimeFailureMiddleware,
+} from './middlewares/responseTime.middleware';
 
 const personDao = new PersonDaoImpl();
 const permissionDao = new PermissionDaoImpl();
@@ -25,6 +31,7 @@ const groupRouter = GroupRouter(groupService);
 
 const middlewares = [winstonMiddleware, requestLogMiddleware(loggerService)];
 const errorHandlers = [
+  endTimeFailureMiddleware(loggerService),
   errorLogMiddleware(loggerService),
   internalErrorMidleware,
   defaultErrorMiddleware(loggerService),
@@ -32,9 +39,12 @@ const errorHandlers = [
 
 const app = express();
 app.use(express.json());
+app.use(startTimeMidleware(loggerService));
 app.use(...middlewares);
 app.use('/v2/users', personDatabaseRouter);
 app.use('/v1/groups', groupRouter);
+app.use(endTimeMiddleware(loggerService));
+app.use(serviceLogMiddleware(loggerService));
 app.use(notFoundMiddleware);
 app.use(...errorHandlers);
 app.listen(port);
