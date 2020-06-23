@@ -4,6 +4,22 @@ import asyncMiddleware from '../middlewares/async.middleware';
 import GroupService from '../services/group/group.interface';
 import { validate } from '../middlewares/validation.middleware';
 
+const trackingWrapper = (
+  res: Response,
+  service: string,
+  method: string,
+  args: Array<string>
+): void => {
+  if (!res.locals.services) {
+    res.locals.services = [];
+  }
+  res.locals.services.push({
+    method,
+    name: service,
+    arguments: args,
+  });
+};
+
 export const GroupRouter = (service: GroupService): Router => {
   const router = Router();
 
@@ -74,22 +90,6 @@ export const GroupRouter = (service: GroupService): Router => {
   );
 
   return router;
-};
-
-const trackingWrapper = (
-  res: Response,
-  service: string,
-  method: string,
-  args: Array<string>
-): void => {
-  if (!res.locals.services) {
-    res.locals.services = [];
-  }
-  res.locals.services.push({
-    name: service,
-    method: method,
-    arguments: args,
-  });
 };
 
 export default GroupRouter;

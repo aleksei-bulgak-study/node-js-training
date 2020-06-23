@@ -1,7 +1,7 @@
 import LoggerService from '../configs/logger';
 import { RequestHandler, Response, Request, NextFunction, ErrorRequestHandler } from 'express';
 
-const startTimeMidleware = (logger: LoggerService): RequestHandler => (
+const startTimeMidleware = (): RequestHandler => (
   request: Request,
   response: Response,
   next: NextFunction

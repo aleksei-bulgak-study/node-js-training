@@ -5,6 +5,22 @@ import { fullPersonSchema, createPersonSchema, Person } from '../models';
 import { validate } from '../middlewares/validation.middleware';
 import asyncMiddleware from '../middlewares/async.middleware';
 
+const trackingWrapper = (
+  res: Response,
+  service: string,
+  method: string,
+  args: Array<string>
+): void => {
+  if (!res.locals.services) {
+    res.locals.services = [];
+  }
+  res.locals.services.push({
+    method,
+    name: service,
+    arguments: args,
+  });
+};
+
 export const PersonRouter = (service: PersonService): Router => {
   const router = Router();
 
@@ -57,7 +73,7 @@ export const PersonRouter = (service: PersonService): Router => {
     asyncMiddleware(async (req: Request, res: Response, next: NextFunction) => {
       const { loginSubstring = '', limit } = req.query;
       const loginArgument = loginSubstring.toString();
-      trackingWrapper(res, 'peopleService', 'getAutoSuggestUsers', [loginArgument, '' + limit]);
+      trackingWrapper(res, 'peopleService', 'getAutoSuggestUsers', [loginArgument, `${limit}`]);
       const result = await service.getAutoSuggestUsers(loginArgument, +limit);
       res.locals.result = { status: 200, body: result };
       next();
@@ -65,20 +81,4 @@ export const PersonRouter = (service: PersonService): Router => {
   );
 
   return router;
-};
-
-const trackingWrapper = (
-  res: Response,
-  service: string,
-  method: string,
-  args: Array<string>
-): void => {
-  if (!res.locals.services) {
-    res.locals.services = [];
-  }
-  res.locals.services.push({
-    name: service,
-    method: method,
-    arguments: args,
-  });
 };
