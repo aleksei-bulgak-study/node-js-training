@@ -12,7 +12,7 @@ export default class PersonDBService implements PersonService {
   }
   getUsers(userIds: string[]): Promise<Person[]> {
     return this.dao.findAll(userIds).then((users: PersonModel[]) => {
-      if (!users || users.length == 0) {
+      if (!users || users.length === 0) {
         throw new InternalError(`Users with ids ${userIds} were not found`, ErrorType.BAD_REQUEST);
       }
 

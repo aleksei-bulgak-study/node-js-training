@@ -3,7 +3,7 @@ import { GroupEntityModel } from './group.entity';
 
 export default interface GroupDao {
   getById(id: string): Promise<GroupEntityModel>;
-  getAll(): Promise<Group[]>;
+  getAll(): Promise<GroupEntityModel[]>;
   create(group: Group): Promise<GroupEntityModel>;
   update(group: Group): Promise<void>;
   delete(id: string): Promise<void>;

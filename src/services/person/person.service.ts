@@ -1,4 +1,3 @@
-/* eslint no-sync: "off" */
 import { Person, ErrorType, InternalError } from '../../models';
 import { v4 as uuidv4 } from 'uuid';
 import PersonService from './person.interface';
@@ -17,6 +16,7 @@ class PersonInMemoryService implements PersonService {
   getById(id: string): Promise<Person> {
     return Promise.resolve(this.getByIdSync(id));
   }
+
   getByIdSync(id: string): Person {
     if (id) {
       const results = this.people.filter((person) => person.id === id);
@@ -50,7 +50,7 @@ class PersonInMemoryService implements PersonService {
   }
 
   delete(id: string): Promise<Person> {
-    const person = this.people.find((user) => user.id === id);
+    const person = this.people.filter((user) => user.id === id)[0];
     if (person) {
       person.isDeleted = true;
       return Promise.resolve(person);

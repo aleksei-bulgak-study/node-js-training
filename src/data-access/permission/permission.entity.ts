@@ -1,7 +1,7 @@
 import { DataTypes, Model, BuildOptions } from 'sequelize';
 import { sequelize } from '../../configs';
 
-interface PermissionEntityModel extends Model {
+export interface PermissionEntityModel extends Model {
   id: number;
   value: string;
 }
@@ -10,7 +10,7 @@ type PermissionEntityModelStatic = typeof Model & {
   new (values?: object, options?: BuildOptions): PermissionEntityModel;
 };
 
-const PermissionEntity = <PermissionEntityModelStatic>sequelize.define(
+const PermissionEntity = sequelize.define(
   'permission',
   {
     id: {
@@ -33,6 +33,6 @@ const PermissionEntity = <PermissionEntityModelStatic>sequelize.define(
   {
     tableName: 'permission',
   }
-);
+) as PermissionEntityModelStatic;
 
-export { PermissionEntity, PermissionEntityModel };
+export { PermissionEntity };

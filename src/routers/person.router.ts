@@ -21,7 +21,7 @@ export const PersonRouter = (service: PersonService): Router => {
     validate<Person>(createPersonSchema),
     asyncMiddleware(async (req: Request, res: Response) => {
       const result = await service.create(req.body);
-      res.status(201).json(result)
+      res.status(201).json(result);
     })
   );
 

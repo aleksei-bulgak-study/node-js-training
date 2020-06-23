@@ -3,6 +3,25 @@ import { Group, InternalError, ErrorType, NotFoundError, Person } from '../../mo
 import { GroupDao } from '../../data-access';
 import { PersonService } from '../person';
 import { GroupEntityModel } from '../../data-access/group/group.entity';
+import { PermissionEntityModel } from '../../data-access/permission/permission.entity';
+
+const convertGroupFromEntity = (group: GroupEntityModel): Group => {
+  if (group) {
+    return {
+      id: group.id,
+      name: group.name,
+      permissions: group.permissions.map((permission: PermissionEntityModel) => permission.value),
+    };
+  }
+  return group;
+};
+
+const convertArrayOfGroupFromEntity = (groups: Array<GroupEntityModel>): Group[] => {
+  if (groups) {
+    return groups.map(convertGroupFromEntity);
+  }
+  return groups;
+};
 
 export class GroupServiceImpl implements GroupService {
   private readonly groupDao: GroupDao;
@@ -47,32 +66,14 @@ export class GroupServiceImpl implements GroupService {
 
   updateUserGroupAssociation(groupId: string, users: Array<string>): Promise<GroupEntityModel> {
     return Promise.all([this.groupDao.getById(groupId), this.personService.getUsers(users)]).then(
-      ([group, users]) => {
+      ([group, foundUsers]) => {
         if (!group) {
           throw new InternalError(`Group with id ${groupId} was not found`, ErrorType.BAD_REQUEST);
         }
-        const userIds = users ? users.map((user: Person) => user.id) : [];
+        const userIds = foundUsers ? foundUsers.map((user: Person) => user.id) : [];
         group.setUsers(userIds);
         return group;
       }
     );
   }
 }
-
-const convertArrayOfGroupFromEntity = (groups: Array<any>) => {
-  if (groups) {
-    return groups.map(convertGroupFromEntity);
-  }
-  return groups;
-};
-
-const convertGroupFromEntity = (group: any) => {
-  if (group) {
-    return {
-      id: group.id,
-      name: group.name,
-      permissions: group.permissions.map((permission: any) => permission.value),
-    };
-  }
-  return group;
-};

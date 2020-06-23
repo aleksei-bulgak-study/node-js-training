@@ -1,7 +1,7 @@
 import { DataTypes, Model, BuildOptions } from 'sequelize';
 import { sequelize } from '../../configs';
 
-interface PersonModel extends Model {
+export interface PersonModel extends Model {
   readonly id: string;
   readonly login: string;
   readonly password: string;
@@ -13,7 +13,7 @@ type PersonModelStatic = typeof Model & {
   new (values?: object, options?: BuildOptions): PersonModel;
 };
 
-const PersonEntity = <PersonModelStatic>sequelize.define(
+const PersonEntity = sequelize.define(
   'user',
   {
     id: {
@@ -47,6 +47,6 @@ const PersonEntity = <PersonModelStatic>sequelize.define(
     },
   },
   { tableName: 'users' }
-);
+) as PersonModelStatic;
 
-export { PersonEntity, PersonModel };
+export { PersonEntity };

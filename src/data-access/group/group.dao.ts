@@ -1,9 +1,9 @@
 import { Group } from '../../models';
 import { sequelize } from '../../configs';
-import {PersonEntity} from '../person';
+import { PersonEntity } from '../person';
 import { PermissionEntity, PermissionDao } from '../permission';
-import {GroupEntity, GroupEntityModel} from './group.entity';
-import GroupDao from './groupDao.interface'
+import { GroupEntity, GroupEntityModel } from './group.entity';
+import GroupDao from './groupDao.interface';
 import { PermissionEntityModel } from '../permission/permission.entity';
 
 class GroupDaoImpl implements GroupDao {
@@ -28,9 +28,11 @@ class GroupDaoImpl implements GroupDao {
       return Promise.all([
         GroupEntity.create(group),
         this.permissionDao.getAllByName(group.permissions),
-      ]).then(([group, permissions]) => {
-        group.setPermissions(permissions.map((permission: PermissionEntityModel) => permission.id));
-        return group;
+      ]).then(([groupModel, permissions]) => {
+        groupModel.setPermissions(
+          permissions.map((permission: PermissionEntityModel) => permission.id)
+        );
+        return groupModel;
       });
     });
   }
@@ -39,8 +41,8 @@ class GroupDaoImpl implements GroupDao {
       return Promise.all([
         GroupEntity.update(group, { where: { id: group.id }, returning: true }),
         this.permissionDao.getAllByName(group.permissions),
-      ]).then(([group, permissions]) => {
-        group[1][0].setPermissions(
+      ]).then(([groupModel, permissions]) => {
+        groupModel[1][0].setPermissions(
           permissions.map((permission: PermissionEntityModel) => permission.id)
         );
       });

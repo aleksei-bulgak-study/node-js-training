@@ -1,20 +1,20 @@
 import { DataTypes, Model, BuildOptions } from 'sequelize';
 import { sequelize } from '../../configs';
-import { PermissionEntity } from '../permission/permission.entity';
+import { PermissionEntity, PermissionEntityModel } from '../permission/permission.entity';
 import { PersonEntity } from '../person/person.entity';
 
-interface GroupEntityModel extends Model {
+export interface GroupEntityModel extends Model {
   readonly id: string;
   readonly name: string;
-
-  setUsers(users: Array<string>): void
+  readonly permissions: PermissionEntityModel[];
+  setUsers(users: Array<string>): void;
 }
 
 type GroupEntityModelStatic = typeof Model & {
   new (values?: object, options?: BuildOptions): GroupEntityModel;
 };
 
-const GroupEntity = <GroupEntityModelStatic>sequelize.define(
+const GroupEntity = sequelize.define(
   'group',
   {
     id: {
@@ -37,7 +37,7 @@ const GroupEntity = <GroupEntityModelStatic>sequelize.define(
   {
     tableName: 'groups',
   }
-);
+) as GroupEntityModelStatic;
 GroupEntity.belongsToMany(PermissionEntity, {
   through: 'group_permission',
 });
@@ -45,4 +45,4 @@ GroupEntity.belongsToMany(PersonEntity, {
   through: 'user_group',
 });
 
-export { GroupEntity, GroupEntityModel };
+export { GroupEntity };
