@@ -51,9 +51,9 @@ class GroupDaoImpl implements GroupDao {
       await groupModel[1][0].setPermissions(
         permissions.map((permission: PermissionEntityModel) => permission.id)
       );
-      return this.getById(group.id);
     });
   }
+
   delete(id: string): Promise<void> {
     return GroupEntity.destroy({ where: { id } });
   }

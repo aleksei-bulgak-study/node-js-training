@@ -5,9 +5,8 @@ import { PersonService } from '../person';
 import { GroupEntityModel } from '../../data-access/group/group.entity';
 import { PermissionEntityModel } from '../../data-access/permission/permission.entity';
 
-const convertGroupFromEntity = async (group: GroupEntityModel): Promise<Group> => {
+const convertGroupFromEntity = (group: GroupEntityModel): Group => {
   if (group) {
-    console.log(group);
     return {
       id: group.id,
       name: group.name,
@@ -17,9 +16,9 @@ const convertGroupFromEntity = async (group: GroupEntityModel): Promise<Group> =
   return group;
 };
 
-const convertArrayOfGroupFromEntity = async (groups: Array<GroupEntityModel>): Promise<Group[]> => {
+const convertArrayOfGroupFromEntity = (groups: Array<GroupEntityModel>): Group[] => {
   if (groups) {
-    return Promise.all(groups.map((group) => convertGroupFromEntity(group)));
+    return groups.map((group) => convertGroupFromEntity(group));
   }
   return groups;
 };
@@ -33,30 +32,34 @@ export class GroupServiceImpl implements GroupService {
     this.personService = personService;
   }
 
-  getById(id: string): Promise<Group> {
-    return this.groupDao
-      .getById(id)
-      .then(convertGroupFromEntity)
-      .catch(() => {
-        throw new NotFoundError(`Group with id ${id} was not found`);
-      });
+  async getById(id: string): Promise<Group> {
+    try {
+      const groupEntity = await this.groupDao.getById(id);
+      return convertGroupFromEntity(groupEntity);
+    } catch {
+      throw new NotFoundError(`Group with id ${id} was not found`);
+    }
   }
-  create(group: Group): Promise<Group> {
-    return this.groupDao.create(group).then(convertGroupFromEntity);
+  async create(group: Group): Promise<Group> {
+    const groupEntity = await this.groupDao.create(group);
+    return convertGroupFromEntity(groupEntity);
   }
-  update(group: Group): Promise<Group> {
-    return this.groupDao.update(group).then(() => group);
+
+  async update(group: Group): Promise<Group> {
+    await this.groupDao.update(group);
+    return this.getById(group.id);
   }
-  delete(id: string): Promise<void> {
-    return this.getById(id).then(() => this.groupDao.delete(id));
+  async delete(id: string): Promise<void> {
+    await this.getById(id);
+    await this.groupDao.delete(id);
   }
-  getAll(): Promise<Group[]> {
-    return this.groupDao
-      .getAll()
-      .then(convertArrayOfGroupFromEntity)
-      .catch(() => {
-        throw new InternalError('Failed to retrieve groups', ErrorType.INTERNAL);
-      });
+  async getAll(): Promise<Group[]> {
+    try {
+      const groups = await this.groupDao.getAll();
+      return convertArrayOfGroupFromEntity(groups);
+    } catch {
+      throw new InternalError('Failed to retrieve groups', ErrorType.INTERNAL);
+    }
   }
 
   async updateUserGroupAssociation(

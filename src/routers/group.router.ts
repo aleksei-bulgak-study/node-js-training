@@ -9,16 +9,18 @@ export const GroupRouter = (service: GroupService): Router => {
 
   router.get(
     '/:id',
-    asyncMiddleware(async (req: Request, res: Response) =>
-      service.getById(req.params.id).then((result) => res.status(200).json(result))
-    )
+    asyncMiddleware(async (req: Request, res: Response) => {
+      const result = await service.getById(req.params.id);
+      res.status(200).json(result);
+    })
   );
 
   router.post(
     '/',
     validate<Group>(groupSchema),
     asyncMiddleware(async (req: Request, res: Response) => {
-      return service.create(req.body).then((result) => res.status(201).json(result));
+      const result = await service.create(req.body);
+      res.status(201).json(result);
     })
   );
 
@@ -28,22 +30,25 @@ export const GroupRouter = (service: GroupService): Router => {
     asyncMiddleware(async (req: Request, res: Response) => {
       const group = req.body;
       group.id = req.params.id;
-      return service.update(group).then((result) => res.status(200).json(result));
+      const result = await service.update(group);
+      res.status(200).json(result);
     })
   );
 
   router.delete(
     '/:id',
-    asyncMiddleware(async (req: Request, res: Response) =>
-      service.delete(req.params.id).then(() => res.status(200).end())
-    )
+    asyncMiddleware(async (req: Request, res: Response) => {
+      await service.delete(req.params.id);
+      res.status(200).end();
+    })
   );
 
   router.get(
     '/',
-    asyncMiddleware(async (req: Request, res: Response) =>
-      service.getAll().then((result) => res.status(200).json(result))
-    )
+    asyncMiddleware(async (req: Request, res: Response) => {
+      const result = await service.getAll();
+      res.status(200).json(result);
+    })
   );
 
   router.put(
@@ -51,9 +56,8 @@ export const GroupRouter = (service: GroupService): Router => {
     asyncMiddleware(async (req: Request, res: Response) => {
       const groupId = req.params.id;
       const users = req.body;
-      return service
-        .updateUserGroupAssociation(groupId, users)
-        .then((result) => res.status(200).json(result));
+      const result = await service.updateUserGroupAssociation(groupId, users);
+      res.status(200).json(result);
     })
   );
 

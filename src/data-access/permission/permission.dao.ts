@@ -14,8 +14,9 @@ export class PermissionDaoImpl implements PermissionDao {
     return PermissionEntity.findByPk(id);
   }
 
-  getByName(name: string): Promise<PermissionEntityModel> {
-    return PermissionEntity.findOne({ where: { value: name } }).then(processNullableEntity);
+  async getByName(name: string): Promise<PermissionEntityModel> {
+    const permissions = await PermissionEntity.findOne({ where: { value: name } });
+    return processNullableEntity(permissions);
   }
 
   getAllByName(value: string[]): Promise<PermissionEntityModel[]> {

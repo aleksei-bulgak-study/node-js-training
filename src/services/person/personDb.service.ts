@@ -10,75 +10,70 @@ export default class PersonDBService implements PersonService {
   constructor(dao: PersonDao) {
     this.dao = dao;
   }
-  getUsers(userIds: string[]): Promise<Person[]> {
-    return this.dao.findAll(userIds).then((users: PersonModel[]) => {
-      if (!users || users.length === 0) {
-        throw new InternalError(`Users with ids ${userIds} were not found`, ErrorType.BAD_REQUEST);
-      }
+  async getUsers(userIds: string[]): Promise<Person[]> {
+    const users = await this.dao.findAll(userIds);
+    if (!users || users.length === 0) {
+      throw new InternalError(`Users with ids ${userIds} were not found`, ErrorType.BAD_REQUEST);
+    }
 
-      const foundUserIds = users.map((user) => user.id);
-      const notFoundUsers = userIds.filter((userId) => foundUserIds.indexOf(userId) === -1);
-      if (!notFoundUsers) {
-        throw new InternalError(
-          `Users with ids ${notFoundUsers} were not found`,
-          ErrorType.BAD_REQUEST
-        );
-      }
+    const foundUserIds = users.map((user) => user.id);
+    const notFoundUsers = userIds.filter((userId) => foundUserIds.indexOf(userId) === -1);
+    if (!notFoundUsers) {
+      throw new InternalError(
+        `Users with ids ${notFoundUsers} were not found`,
+        ErrorType.BAD_REQUEST
+      );
+    }
 
-      return users;
-    });
+    return users;
   }
 
-  getById(id: string): Promise<Person> {
+  async getById(id: string): Promise<Person> {
     if (id) {
-      return this.dao
-        .getById(id)
-        .then((person: PersonModel | null) => {
-          if (!person) {
-            throw new NotFoundError(`Failed to obtain user with id ${id}`);
-          }
-          return person;
-        })
-        .catch(() => {
+      try {
+        const personEntity = await this.dao.getById(id);
+        if (!personEntity) {
           throw new NotFoundError(`Failed to obtain user with id ${id}`);
-        });
+        }
+        return personEntity;
+      } catch {
+        throw new NotFoundError(`Failed to obtain user with id ${id}`);
+      }
     }
     throw new InternalError('Invalid id was specified', ErrorType.NOT_FOUND);
   }
 
-  create(user: Person): Promise<Person> {
-    return this.checkUserValid(user)
-      .catch(() => {
-        throw new InternalError('Invalid user was specified', ErrorType.BAD_REQUEST);
-      })
-      .then(() => {
-        user.id = uuidv4().toString();
-        user.isDeleted = false;
-        return this.dao.create(user);
-      })
-      .then(() => user);
+  async create(user: Person): Promise<Person> {
+    try {
+      await this.checkUserValid(user);
+    } catch {
+      throw new InternalError('Invalid user was specified', ErrorType.BAD_REQUEST);
+    }
+
+    user.id = uuidv4().toString();
+    user.isDeleted = false;
+    await this.dao.create(user);
+    return this.getById(user.id);
   }
 
-  update(person: Person): Promise<Person> {
-    return this.getById(person.id)
-      .then((currentPerson: Person) => {
-        if (person.login && currentPerson.login !== person.login) {
-          return this.checkUserValid(person);
-        }
-        return this.dao.update(person);
-      })
-      .then(() => person);
+  async update(person: Person): Promise<Person> {
+    const personEntity = await this.getById(person.id);
+    if (person.login && personEntity.login !== person.login) {
+      this.checkUserValid(person);
+    } else {
+      await this.dao.update(person);
+    }
+    return this.getById(person.id);
   }
 
-  delete(id: string): Promise<Person> {
-    return this.getById(id)
-      .then((person) => {
-        person.isDeleted = true;
-        return this.update(person);
-      })
-      .catch(() => {
-        throw new InternalError(`Person with id ${id} was not found`, ErrorType.BAD_REQUEST);
-      });
+  async delete(id: string): Promise<Person> {
+    try {
+      const personEntity = await this.getById(id);
+      personEntity.isDeleted = true;
+      return this.update(personEntity);
+    } catch {
+      throw new InternalError(`Person with id ${id} was not found`, ErrorType.BAD_REQUEST);
+    }
   }
 
   getAutoSuggestUsers(loginSubstring: string, limit: number): Promise<Person[]> {

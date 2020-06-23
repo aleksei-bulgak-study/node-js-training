@@ -12,12 +12,12 @@ class PersonDaoImpl implements PersonDao {
     return PersonEntity.findByPk(id);
   }
 
-  create(person: Person): Promise<void> {
-    return PersonEntity.create(person);
+  async create(person: Person): Promise<void> {
+    await PersonEntity.create(person);
   }
 
-  update(person: Person): Promise<void> {
-    return PersonEntity.update(person, { where: { id: person.id } });
+  async update(person: Person): Promise<void> {
+    await PersonEntity.update(person, { where: { id: person.id } });
   }
 
   find(login: string, limit: number): Promise<PersonModel[]> {
