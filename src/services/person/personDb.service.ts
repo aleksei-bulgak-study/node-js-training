@@ -59,7 +59,7 @@ export default class PersonDBService implements PersonService {
   async update(person: Person): Promise<Person> {
     const personEntity = await this.getById(person.id);
     if (person.login && personEntity.login !== person.login) {
-      this.checkUserValid(person);
+      await this.checkUserValid(person);
     } else {
       await this.dao.update(person);
     }
