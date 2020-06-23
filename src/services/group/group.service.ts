@@ -8,11 +8,10 @@ import { PermissionEntityModel } from '../../data-access/permission/permission.e
 const convertGroupFromEntity = async (group: GroupEntityModel): Promise<Group> => {
   if (group) {
     console.log(group);
-    const permissions = await group.getPermissions();
     return {
       id: group.id,
       name: group.name,
-      permissions: permissions.map((permission: PermissionEntityModel) => permission.value),
+      permissions: group.permissions.map((permission: PermissionEntityModel) => permission.value),
     };
   }
   return group;
@@ -37,12 +36,6 @@ export class GroupServiceImpl implements GroupService {
   getById(id: string): Promise<Group> {
     return this.groupDao
       .getById(id)
-      .then((person) => {
-        if (!person) {
-          throw new NotFoundError(`Group with id ${id} was not found`);
-        }
-        return person;
-      })
       .then(convertGroupFromEntity)
       .catch(() => {
         throw new NotFoundError(`Group with id ${id} was not found`);
@@ -70,14 +63,9 @@ export class GroupServiceImpl implements GroupService {
     groupId: string,
     users: Array<string>
   ): Promise<GroupEntityModel> {
-    const groupModel = await this.groupDao.getById(groupId);
     const userModels = await this.personService.getUsers(users);
 
-    if (!groupModel) {
-      throw new InternalError(`Group with id ${groupId} was not found`, ErrorType.BAD_REQUEST);
-    }
     const userIds = userModels ? userModels.map((user: Person) => user.id) : [];
-    await groupModel.setUsers(userIds);
-    return this.groupDao.getById(groupId);
+    return this.groupDao.addUsersInGroup(groupId, userIds);
   }
 }

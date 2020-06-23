@@ -7,4 +7,5 @@ export default interface GroupDao {
   create(group: Group): Promise<GroupEntityModel>;
   update(group: Group): Promise<void>;
   delete(id: string): Promise<void>;
+  addUsersInGroup(groupId: string, users: string[]): Promise<GroupEntityModel>;
 }
