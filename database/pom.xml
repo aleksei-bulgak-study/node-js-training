@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.bulgak</groupId>
+  <artifactId>database-schema</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+
+    <liquibase-core.version>3.9.0</liquibase-core.version>
+    <liquibase-maven-plugin.version>3.9.0</liquibase-maven-plugin.version>
+
+    <changeLogFile>src/main/resources/data/changelog/db.changelog-master.xml</changeLogFile>
+  </properties>
+
+  <dependencies>
+    <!-- Liquibase -->
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+      <version>${liquibase-core.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.2.12</version>
+    </dependency>
+  </dependencies>
+
+  <profiles>
+    <profile>
+      <id>db-rebuild</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-maven-plugin</artifactId>
+            <version>${liquibase-maven-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>release-changelog</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>dropAll</goal>
+                  <goal>update</goal>
+                </goals>
+                <configuration>
+                  <changeLogFile>${changeLogFile}</changeLogFile>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>db-update</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-maven-plugin</artifactId>
+            <version>${liquibase-maven-plugin.version}</version>
+            <configuration>
+              <changeLogFile>${changeLogFile}</changeLogFile>
+            </configuration>
+            <executions>
+              <execution>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>update</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>db-rollback</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-maven-plugin</artifactId>
+            <version>${liquibase-maven-plugin.version}</version>
+            <configuration>
+              <changeLogFile>${changeLogFile}</changeLogFile>
+              <rollbackCount>1</rollbackCount>
+            </configuration>
+            <executions>
+              <execution>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>rollback</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+  </profiles>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.liquibase</groupId>
+          <artifactId>liquibase-maven-plugin</artifactId>
+          <version>${liquibase-maven-plugin.version}</version>
+          <configuration>
+            <changeLogFile>${changeLogFile}</changeLogFile>
+            <propertyFileWillOverride>true</propertyFileWillOverride>
+            <driver>org.postgresql.Driver</driver>
+            <url>${env.DB_URL}</url>
+            <username>${env.DB_USERNAME}</username>
+            <password>${env.DB_PASSWORD}</password>
+          </configuration>
+          <executions>
+            <execution>
+              <id>release-changelog</id>
+              <phase>process-resources</phase>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>8</source>
+          <target>8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

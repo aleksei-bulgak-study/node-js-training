@@ -1,7 +1,5 @@
-import PersonInMemoryService from './person.service';
-import PersonDbService from './personDb.service';
-import PersonService from './person.interface';
+import { PersonDbService, PersonService } from './person';
 
-export { PersonInMemoryService, PersonDbService };
+export { PersonDbService };
 
 export default PersonService;

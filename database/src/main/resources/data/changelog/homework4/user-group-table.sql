@@ -1,0 +1,7 @@
+CREATE TABLE user_group(
+  "userId" VARCHAR(200) NOT NULL,
+  "groupId" VARCHAR(200) NOT NULL,
+  FOREIGN KEY ("userId") REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY ("groupId") REFERENCES groups (id) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT user_group_pk PRIMARY KEY ("userId", "groupId")
+);

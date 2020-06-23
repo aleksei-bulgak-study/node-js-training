@@ -1,19 +1,19 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import { ObjectSchema } from '@hapi/joi';
-import { Person, ErrorType, InternalError } from '../models';
+import { ErrorType, InternalError } from '../models';
 
-export const validatePerson = (validationSchema: ObjectSchema<Person>): RequestHandler => (
+export const validate = <T>(validationSchema: ObjectSchema<T>): RequestHandler => (
   req: Request,
   res: Response,
   next: NextFunction
 ): void => {
-  const person = req.body;
+  const entity = req.body;
   const id = req.params.id;
   if (id) {
-    person.id = id;
+    entity.id = id;
   }
 
-  const result = validationSchema.validate(person);
+  const result = validationSchema.validate(entity);
   if (result.error) {
     return next(new InternalError(result.error.message, ErrorType.BAD_REQUEST));
   }
