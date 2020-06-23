@@ -5,20 +5,22 @@ import { PersonService } from '../person';
 import { GroupEntityModel } from '../../data-access/group/group.entity';
 import { PermissionEntityModel } from '../../data-access/permission/permission.entity';
 
-const convertGroupFromEntity = (group: GroupEntityModel): Group => {
+const convertGroupFromEntity = async (group: GroupEntityModel): Promise<Group> => {
   if (group) {
+    console.log(group);
+    const permissions = await group.getPermissions();
     return {
       id: group.id,
       name: group.name,
-      permissions: group.permissions.map((permission: PermissionEntityModel) => permission.value),
+      permissions: permissions.map((permission: PermissionEntityModel) => permission.value),
     };
   }
   return group;
 };
 
-const convertArrayOfGroupFromEntity = (groups: Array<GroupEntityModel>): Group[] => {
+const convertArrayOfGroupFromEntity = async (groups: Array<GroupEntityModel>): Promise<Group[]> => {
   if (groups) {
-    return groups.map(convertGroupFromEntity);
+    return Promise.all(groups.map((group) => convertGroupFromEntity(group)));
   }
   return groups;
 };
@@ -64,16 +66,18 @@ export class GroupServiceImpl implements GroupService {
       });
   }
 
-  updateUserGroupAssociation(groupId: string, users: Array<string>): Promise<GroupEntityModel> {
-    return Promise.all([this.groupDao.getById(groupId), this.personService.getUsers(users)]).then(
-      ([group, foundUsers]) => {
-        if (!group) {
-          throw new InternalError(`Group with id ${groupId} was not found`, ErrorType.BAD_REQUEST);
-        }
-        const userIds = foundUsers ? foundUsers.map((user: Person) => user.id) : [];
-        group.setUsers(userIds);
-        return group;
-      }
-    );
+  async updateUserGroupAssociation(
+    groupId: string,
+    users: Array<string>
+  ): Promise<GroupEntityModel> {
+    const groupModel = await this.groupDao.getById(groupId);
+    const userModels = await this.personService.getUsers(users);
+
+    if (!groupModel) {
+      throw new InternalError(`Group with id ${groupId} was not found`, ErrorType.BAD_REQUEST);
+    }
+    const userIds = userModels ? userModels.map((user: Person) => user.id) : [];
+    await groupModel.setUsers(userIds);
+    return this.groupDao.getById(groupId);
   }
 }

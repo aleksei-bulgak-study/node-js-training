@@ -49,7 +49,7 @@ export const PersonRouter = (service: PersonService): Router => {
     asyncMiddleware(async (req: Request, res: Response) => {
       const { loginSubstring = '', limit } = req.query;
       const loginArgument = loginSubstring.toString();
-      const result = service.getAutoSuggestUsers(loginArgument, +limit);
+      const result = await service.getAutoSuggestUsers(loginArgument, +limit);
       res.status(200).json(result);
     })
   );

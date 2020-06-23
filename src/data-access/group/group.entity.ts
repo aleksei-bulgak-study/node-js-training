@@ -6,7 +6,7 @@ import { PersonEntity } from '../person/person.entity';
 export interface GroupEntityModel extends Model {
   readonly id: string;
   readonly name: string;
-  readonly permissions: PermissionEntityModel[];
+  getPermissions(): PermissionEntityModel[];
   setUsers(users: Array<string>): void;
 }
 

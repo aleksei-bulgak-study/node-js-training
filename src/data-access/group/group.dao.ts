@@ -18,7 +18,7 @@ class GroupDaoImpl implements GroupDao {
       include: [PermissionEntity, PersonEntity],
     });
   }
-  getAll(): Promise<Group[]> {
+  getAll(): Promise<GroupEntityModel[]> {
     return GroupEntity.findAll({
       include: [PermissionEntity, PersonEntity],
     });
