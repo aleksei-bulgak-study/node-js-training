@@ -41,8 +41,5 @@ database
 index.html
 .env
 **/secrets.sh
-<<<<<<< HEAD
-=======
 logs
 .env
->>>>>>> 85ec0c6... feat: add winston logger instead of console.log output
