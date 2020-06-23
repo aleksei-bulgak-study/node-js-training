@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import PersonService from './person.interface';
 import { Person, InternalError, ErrorType, NotFoundError } from '../../models';
 import { PersonDao } from '../../data-access';
+import { PersonModel } from '../../data-access/person/person.entity';
 
 export default class PersonDBService implements PersonService {
   private readonly dao: PersonDao;
@@ -10,7 +11,7 @@ export default class PersonDBService implements PersonService {
     this.dao = dao;
   }
   getUsers(userIds: string[]): Promise<Person[]> {
-    return this.dao.findAll(userIds).then((users: Person[]) => {
+    return this.dao.findAll(userIds).then((users: PersonModel[]) => {
       if (!users || users.length == 0) {
         throw new InternalError(`Users with ids ${userIds} were not found`, ErrorType.BAD_REQUEST);
       }
@@ -32,7 +33,7 @@ export default class PersonDBService implements PersonService {
     if (id) {
       return this.dao
         .getById(id)
-        .then((person: Person | null) => {
+        .then((person: PersonModel | null) => {
           if (!person) {
             throw new NotFoundError(`Failed to obtain user with id ${id}`);
           }

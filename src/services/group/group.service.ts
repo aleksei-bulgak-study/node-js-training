@@ -2,6 +2,7 @@ import GroupService from './group.interface';
 import { Group, InternalError, ErrorType, NotFoundError, Person } from '../../models';
 import { GroupDao } from '../../data-access';
 import { PersonService } from '../person';
+import { GroupEntityModel } from '../../data-access/group/group.entity';
 
 export class GroupServiceImpl implements GroupService {
   private readonly groupDao: GroupDao;
@@ -27,7 +28,7 @@ export class GroupServiceImpl implements GroupService {
       });
   }
   create(group: Group): Promise<Group> {
-    return this.groupDao.create(group).then(() => group);
+    return this.groupDao.create(group).then(convertGroupFromEntity);
   }
   update(group: Group): Promise<Group> {
     return this.groupDao.update(group).then(() => group);
@@ -44,7 +45,7 @@ export class GroupServiceImpl implements GroupService {
       });
   }
 
-  updateUserGroupAssociation(groupId: string, users: Array<string>): Promise<Group> {
+  updateUserGroupAssociation(groupId: string, users: Array<string>): Promise<GroupEntityModel> {
     return Promise.all([this.groupDao.getById(groupId), this.personService.getUsers(users)]).then(
       ([group, users]) => {
         if (!group) {

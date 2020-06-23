@@ -6,6 +6,8 @@ import { PersonEntity } from '../person/person.entity';
 interface GroupEntityModel extends Model {
   readonly id: string;
   readonly name: string;
+
+  setUsers(users: Array<string>): void
 }
 
 type GroupEntityModelStatic = typeof Model & {

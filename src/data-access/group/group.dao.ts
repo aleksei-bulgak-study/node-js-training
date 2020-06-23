@@ -1,7 +1,9 @@
-import { Model } from 'sequelize';
 import { Group } from '../../models';
 import { sequelize } from '../../configs';
-import { PersonEntity, PermissionEntity, GroupEntity, GroupDao, PermissionDao } from '..';
+import {PersonEntity} from '../person';
+import { PermissionEntity, PermissionDao } from '../permission';
+import {GroupEntity, GroupEntityModel} from './group.entity';
+import GroupDao from './groupDao.interface'
 import { PermissionEntityModel } from '../permission/permission.entity';
 
 class GroupDaoImpl implements GroupDao {
@@ -11,7 +13,7 @@ class GroupDaoImpl implements GroupDao {
     this.permissionDao = permissionDao;
   }
 
-  getById(id: string): Promise<Group> {
+  getById(id: string): Promise<GroupEntityModel> {
     return GroupEntity.findByPk(id, {
       include: [PermissionEntity, PersonEntity],
     });
@@ -21,7 +23,7 @@ class GroupDaoImpl implements GroupDao {
       include: [PermissionEntity, PersonEntity],
     });
   }
-  create(group: Group): Promise<void> {
+  create(group: Group): Promise<GroupEntityModel> {
     return sequelize.transaction(() => {
       return Promise.all([
         GroupEntity.create(group),

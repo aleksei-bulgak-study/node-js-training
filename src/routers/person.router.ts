@@ -11,7 +11,8 @@ export const PersonRouter = (service: PersonService): Router => {
   router.get(
     '/:id',
     asyncMiddleware(async (req: Request, res: Response) => {
-      return service.getById(req.params.id).then((result) => res.status(200).json(result));
+      const result = await service.getById(req.params.id);
+      res.status(200).json(result);
     })
   );
 
@@ -19,7 +20,8 @@ export const PersonRouter = (service: PersonService): Router => {
     '/',
     validate<Person>(createPersonSchema),
     asyncMiddleware(async (req: Request, res: Response) => {
-      return service.create(req.body).then((result) => res.status(201).json(result));
+      const result = await service.create(req.body);
+      res.status(201).json(result)
     })
   );
 
@@ -29,14 +31,16 @@ export const PersonRouter = (service: PersonService): Router => {
     asyncMiddleware(async (req: Request, res: Response) => {
       const person = req.body;
       person.id = req.params.id;
-      return service.update(person).then((result) => res.status(200).json(result));
+      const result = await service.update(person);
+      res.status(200).json(result);
     })
   );
 
   router.delete(
     '/:id',
     asyncMiddleware(async (req: Request, res: Response) => {
-      return service.delete(req.params.id).then((result) => res.status(200).json(result));
+      const result = await service.delete(req.params.id);
+      res.status(200).json(result);
     })
   );
 
@@ -45,9 +49,8 @@ export const PersonRouter = (service: PersonService): Router => {
     asyncMiddleware(async (req: Request, res: Response) => {
       const { loginSubstring = '', limit } = req.query;
       const loginArgument = loginSubstring.toString();
-      return service
-        .getAutoSuggestUsers(loginArgument, +limit)
-        .then((result) => res.status(200).json(result));
+      const result = service.getAutoSuggestUsers(loginArgument, +limit);
+      res.status(200).json(result);
     })
   );
 

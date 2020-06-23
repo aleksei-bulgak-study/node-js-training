@@ -4,24 +4,12 @@ import { PermissionDao } from '..';
 
 export class PermissionDaoImpl implements PermissionDao {
   getById(id: number): Promise<PermissionEntityModel> {
-    return PermissionEntity.findByPk(id)
-      .then(processNullableEntity)
-      .then((result: PermissionEntityModel) => {
-        return {
-          id: result.id,
-          value: result.value,
-        };
-      });
+    return PermissionEntity.findByPk(id);
   }
+
   getByName(name: string): Promise<PermissionEntityModel> {
     return PermissionEntity.findOne({ where: { value: name } })
-      .then(processNullableEntity)
-      .then((result: PermissionEntityModel) => {
-        return {
-          id: result.id,
-          value: result.value,
-        };
-      });
+      .then(processNullableEntity);
   }
 
   getAllByName(value: string[]): Promise<PermissionEntityModel[]> {

@@ -1,14 +1,14 @@
 import { Op } from 'sequelize';
 import { Person } from '../../models';
 import PersonDao from './personDao.interface';
-import { PersonEntity } from './person.entity';
+import { PersonEntity, PersonModel } from './person.entity';
 
 class PersonDaoImpl implements PersonDao {
-  findAll(userIds: string[]): Promise<Person[]> {
+  findAll(userIds: string[]): Promise<PersonModel[]> {
     return PersonEntity.findAll({ where: { id: userIds } });
   }
 
-  getById(id: string): Promise<Person> {
+  getById(id: string): Promise<PersonModel> {
     return PersonEntity.findByPk(id);
   }
 
@@ -20,11 +20,11 @@ class PersonDaoImpl implements PersonDao {
     return PersonEntity.update(person, { where: { id: person.id } });
   }
 
-  find(login: string, limit: number): Promise<Person[]> {
+  find(login: string, limit: number): Promise<PersonModel[]> {
     return PersonEntity.findAll({ where: { login: { [Op.like]: `%${login}%` } }, limit });
   }
 
-  findByLogin(login: string): Promise<Person> {
+  findByLogin(login: string): Promise<PersonModel> {
     return PersonEntity.findOne({ where: { login } });
   }
 }

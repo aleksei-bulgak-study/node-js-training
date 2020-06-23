@@ -1,4 +1,5 @@
 import { Group } from '../../models';
+import { GroupEntityModel } from '../../data-access/group/group.entity';
 
 export default interface GroupService {
   getById(id: string): Promise<Group>;
@@ -6,5 +7,5 @@ export default interface GroupService {
   update(group: Group): Promise<Group>;
   delete(id: string): Promise<void>;
   getAll(): Promise<Group[]>;
-  updateUserGroupAssociation(groupId: string, users: Array<string>): Promise<Group>;
+  updateUserGroupAssociation(groupId: string, users: Array<string>): Promise<GroupEntityModel>;
 }
