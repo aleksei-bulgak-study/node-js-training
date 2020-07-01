@@ -4,6 +4,7 @@ import { GroupDao } from '../../data-access';
 import { PersonService } from '../person';
 import { GroupEntityModel } from '../../data-access/group/group.entity';
 import { PermissionEntityModel } from '../../data-access/permission/permission.entity';
+import { PersonModel } from '../../data-access/person/person.entity';
 
 const convertGroupFromEntity = (group: GroupEntityModel): Group => {
   if (group) {
@@ -11,6 +12,7 @@ const convertGroupFromEntity = (group: GroupEntityModel): Group => {
       id: group.id,
       name: group.name,
       permissions: group.permissions.map((permission: PermissionEntityModel) => permission.value),
+      users: group.users.map((user: PersonModel) => user.login),
     };
   }
   return group;

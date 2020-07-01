@@ -11,6 +11,7 @@ export default interface Group {
   id: string;
   name: string;
   permissions: Array<string>;
+  users: Array<string>;
 }
 
 export { groupSchema };
