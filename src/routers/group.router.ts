@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { Group, groupSchema } from '../models';
+import { Group, groupSchema, createGroupSchema } from '../models';
 import asyncMiddleware from '../middlewares/async.middleware';
 import GroupService from '../services/group/group.interface';
 import { validate } from '../middlewares/validation.middleware';
@@ -35,7 +35,7 @@ export const GroupRouter = (service: GroupService): Router => {
 
   router.post(
     '/',
-    validate<Group>(groupSchema),
+    validate<Group>(createGroupSchema),
     asyncMiddleware(async (req: Request, res: Response, next: NextFunction) => {
       trackingWrapper(res, 'groupService', 'create', [req.body]);
       const result = await service.create(req.body);

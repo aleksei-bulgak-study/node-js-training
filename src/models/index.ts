@@ -3,7 +3,7 @@ import Person from './person.model';
 import Group from './group.model';
 import Permission from './permission.model';
 import { fullPersonSchema, createPersonSchema } from './person.model';
-import { groupSchema } from './group.model';
+import { groupSchema, createGroupSchema } from './group.model';
 import { InternalError, NotFoundError } from './errors';
 
 export {
@@ -14,6 +14,7 @@ export {
   fullPersonSchema,
   createPersonSchema,
   groupSchema,
+  createGroupSchema,
   InternalError,
   NotFoundError,
 };
