@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import GroupService from './group.interface';
 import { Group, InternalError, ErrorType, NotFoundError, Person } from '../../models';
 import { GroupDao } from '../../data-access';
@@ -41,6 +42,9 @@ export class GroupServiceImpl implements GroupService {
     }
   }
   async create(group: Group): Promise<Group> {
+    if(!group.id) {
+      group.id = uuidv4().toString();
+    }
     const groupEntity = await this.groupDao.create(group);
     return convertGroupFromEntity(groupEntity);
   }
