@@ -9,6 +9,7 @@ export default (logger: LoggerService): RequestHandler => (
   if (response.locals.result) {
     logger.debug({ message: 'Service method was called', data: response.locals.services });
     response.status(response.locals.result.status).json(response.locals.result.body);
+  } else {
+    return next();
   }
-  next();
 };
