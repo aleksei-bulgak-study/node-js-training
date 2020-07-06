@@ -4,6 +4,16 @@ import { Person, InternalError, ErrorType, NotFoundError } from '../../models';
 import { PersonDao } from '../../data-access';
 import { PersonModel } from '../../data-access/person/person.entity';
 
+const convertPersonFromEntity = (personEntity: PersonModel): Person => {
+  return {
+    id: personEntity.id,
+    login: personEntity.login,
+    password: personEntity.password,
+    age: personEntity.age,
+    isDeleted: personEntity.isDeleted,
+  };
+};
+
 export default class PersonDBService implements PersonService {
   private readonly dao: PersonDao;
 
@@ -35,7 +45,7 @@ export default class PersonDBService implements PersonService {
         if (!personEntity) {
           throw new NotFoundError(`Failed to obtain user with id ${id}`);
         }
-        return personEntity;
+        return convertPersonFromEntity(personEntity);
       } catch {
         throw new NotFoundError(`Failed to obtain user with id ${id}`);
       }

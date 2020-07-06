@@ -41,3 +41,5 @@ database
 index.html
 .env
 **/secrets.sh
+logs
+.env

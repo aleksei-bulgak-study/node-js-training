@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize';
+import LoggerService from './logger';
 
-const databaseConfig = (dbUrl: string): Sequelize => {
+const databaseConfig = (dbUrl: string, logger: LoggerService): Sequelize => {
   const sequelize = new Sequelize(dbUrl, {
     dialect: 'postgres',
     dialectOptions: {
@@ -20,10 +21,10 @@ const databaseConfig = (dbUrl: string): Sequelize => {
   sequelize
     .authenticate()
     .then(() => {
-      console.log('Connection has been established successfully.');
+      logger.info('Connection has been established successfully.');
     })
     .catch((err: Error) => {
-      console.error('Unable to connect to the database', err);
+      logger.error('Unable to connect to the database', err);
     });
 
   return sequelize;
