@@ -1,8 +1,8 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { Group, groupSchema, createGroupSchema } from '../models';
+import { Group, groupSchema, createGroupSchema, assotiateUserWithGroup } from '../models';
 import asyncMiddleware from '../middlewares/async.middleware';
 import GroupService from '../services/group/group.interface';
-import { validate } from '../middlewares/validation.middleware';
+import { validate, validateArray } from '../middlewares/validation.middleware';
 
 const trackingWrapper = (
   res: Response,
@@ -79,6 +79,7 @@ export const GroupRouter = (service: GroupService): Router => {
 
   router.put(
     '/:id/users',
+    validateArray(assotiateUserWithGroup),
     asyncMiddleware(async (req: Request, res: Response, next: NextFunction) => {
       const groupId = req.params.id;
       const users = req.body;

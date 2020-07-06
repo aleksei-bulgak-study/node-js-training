@@ -12,7 +12,6 @@ const createGroupSchema = Joi.object({
   name: Joi.string().trim().required(),
   permissions: Joi.array().items(permissionValueSchema),
 });
-
 export default interface Group {
   id: string;
   name: string;
