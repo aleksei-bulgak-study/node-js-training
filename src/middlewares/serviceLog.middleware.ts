@@ -6,6 +6,9 @@ export default (logger: LoggerService): RequestHandler => (
   response: Response,
   next: NextFunction
 ): void => {
-  logger.debug({ message: 'Service method was called', data: response.locals.services });
-  response.status(response.locals.result.status).json(response.locals.result.body);
+  if (response.locals.result) {
+    logger.debug({ message: 'Service method was called', data: response.locals.services });
+    response.status(response.locals.result.status).json(response.locals.result.body);
+  }
+  next();
 };

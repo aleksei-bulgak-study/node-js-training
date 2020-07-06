@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "50416212-ca2b-40ff-b5ed-b3f4d5eb3423",
+		"_postman_id": "f5dada07-4207-4c3c-8d61-26fd4acf43cc",
 		"name": "UserService",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,34 +11,23 @@
 				{
 					"name": "getById",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
 								"value": "{{token}}",
-								"type": "text",
-								"disabled": true
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{host}}/v1/users/9476bc55-7351-4ca0-b70f-dd8c8d0dff5s",
+							"raw": "{{host}}/v1/users/6c996808-6829-4879-b64a-596c6359c5d2",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v1",
 								"users",
-								"9476bc55-7351-4ca0-b70f-dd8c8d0dff5s"
+								"6c996808-6829-4879-b64a-596c6359c5d2"
 							]
 						}
 					},
@@ -77,14 +66,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/v1/users/8a666132-6e60-4647-ba33-e4aa85f828sa",
+							"raw": "{{host}}/v1/users/6c996808-6829-4879-b64a-596c6359c5d2",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v1",
 								"users",
-								"8a666132-6e60-4647-ba33-e4aa85f828sa"
+								"6c996808-6829-4879-b64a-596c6359c5d2"
 							]
 						}
 					},
@@ -93,18 +82,14 @@
 				{
 					"name": "get",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://{{host}}/v1/users?limit=10",
 							"protocol": "http",
@@ -137,7 +122,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\": \"2b074600-02c8-4131-882d-084e847a75a5\",\n    \"login\": \"test\",\n    \"password\": \"123456\",\n    \"age\": 28,\n    \"isDeleted\": false\n}",
+							"raw": "{\n\t\"id\": \"2b074600-02c8-4131-882d-084e847a75a5\",\n    \"login\": \"aleksei.bulgak\",\n    \"password\": \"123456\",\n    \"age\": 28,\n    \"isDeleted\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -145,14 +130,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/v1/users/7e2ed06f-38ec-4bb7-b76e-9a98ffd1cc52",
+							"raw": "{{host}}/v1/users/6c996808-6829-4879-b64a-596c6359c5d2",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v1",
 								"users",
-								"7e2ed06f-38ec-4bb7-b76e-9a98ffd1cc52"
+								"6c996808-6829-4879-b64a-596c6359c5d2"
 							]
 						}
 					},
@@ -168,33 +153,25 @@
 					"name": "getById",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
 								"value": "{{token}}",
-								"type": "text",
-								"disabled": true
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{host}}/v2/users/9476bc55-7351-4ca0-b70f-dd8c8d0dff5s",
+							"raw": "{{host}}/v2/users/8a666132-6e60-4647-ba33-e4aa85f828ab",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v2",
 								"users",
-								"9476bc55-7351-4ca0-b70f-dd8c8d0dff5s"
+								"8a666132-6e60-4647-ba33-e4aa85f828ab"
 							]
 						}
 					},
@@ -204,10 +181,16 @@
 					"name": "create",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"login\": \"yuru.shulhat\",\n\t\"password\": \"87654\",\n\t\"age\": -30,\n\t\"isDeleted\": false\n}",
+							"raw": "{\n\t\"login\": \"aleksei bulgak2\",\n\t\"password\": \"87654\",\n\t\"age\": 30,\n\t\"isDeleted\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -231,16 +214,22 @@
 					"name": "delete",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{host}}/v2/users/8a666132-6e60-4647-ba33-e4aa85f828sa",
+							"raw": "{{host}}/v2/users/b4d711a1-6b33-4c94-8dde-929c8fab69d6",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v2",
 								"users",
-								"8a666132-6e60-4647-ba33-e4aa85f828sa"
+								"b4d711a1-6b33-4c94-8dde-929c8fab69d6"
 							]
 						}
 					},
@@ -249,18 +238,14 @@
 				{
 					"name": "get",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://{{host}}/v2/users?limit=10",
 							"protocol": "http",
@@ -290,10 +275,16 @@
 					"name": "update",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\": \"2b074600-02c8-4131-882d-084e847a75a5\",\n    \"login\": \"test\",\n    \"password\": \"123456\",\n    \"age\": 28,\n    \"isDeleted\": false\n}",
+							"raw": "{\n\t\"id\": \"a44269c5-3f85-4710-b1a0-27ffe4bdcb89\",\n    \"login\": \"test123\",\n    \"password\": \"123456\",\n    \"age\": 28,\n    \"isDeleted\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -301,14 +292,81 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/v2/users/7e2ed06f-38ec-4bb7-b76e-9a98ffd1cc52",
+							"raw": "{{host}}/v2/users/a44269c5-3f85-4710-b1a0-27ffe4bdcb87",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v2",
 								"users",
-								"7e2ed06f-38ec-4bb7-b76e-9a98ffd1cc52"
+								"a44269c5-3f85-4710-b1a0-27ffe4bdcb87"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "micronaut",
+			"item": [
+				{
+					"name": "get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"login\": \"micronaut user\",\n\t\"password\": \"87654\",\n\t\"age\": 30,\n\t\"deleted\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/users/8a666132-6e60-4647-ba33-e4aa85f828ab",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"8a666132-6e60-4647-ba33-e4aa85f828ab"
 							]
 						}
 					},

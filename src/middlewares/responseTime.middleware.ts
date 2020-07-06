@@ -32,7 +32,6 @@ const endTimeFailureMiddleware = (logger: LoggerService): ErrorRequestHandler =>
   response: Response,
   next: NextFunction
 ): void => {
-  console.log('test');
   const methodFinised = process.hrtime();
   const methodStarted = response.locals.start;
   logger.debug({

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "41ce5ea0-c00e-451c-8f0f-52c789b6c5f0",
+		"_postman_id": "acf80c8c-d7d9-4b12-bed1-fd162d0bda3f",
 		"name": "GroupService",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,13 +9,20 @@
 			"name": "get",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": "{{host}}/groups",
+					"raw": "{{host}}/v1/groups",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"v1",
 						"groups"
 					]
 				}
@@ -29,7 +36,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\": \"{{$guid}}\",\n\t\"name\": \"test-{{$guid}}\",\n\t\"permissions\": [\"READ\"]\n}",
+					"raw": "{\n\t\"id\": \"{{$guid}}\",\n\t\"name\": \"test-{{$guid}}\",\n\t\"permissions\": [\"READ\", \"WRITE\"]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -37,11 +44,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/groups",
+					"raw": "{{host}}/v1/groups",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"v1",
 						"groups"
 					]
 				}
@@ -52,15 +60,22 @@
 			"name": "delete",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": "{{host}}/groups/bc78d813-2501-46fc-85a2-8cb3bbc7df61",
+					"raw": "{{host}}/v1/groups/e324aae3-cd9f-4a58-b289-237993d0b8d3",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"v1",
 						"groups",
-						"bc78d813-2501-46fc-85a2-8cb3bbc7df61"
+						"e324aae3-cd9f-4a58-b289-237993d0b8d3"
 					]
 				}
 			},
@@ -70,10 +85,16 @@
 			"name": "update",
 			"request": {
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": \"bb37ba6c-b49d-4854-90d0-283f14e9bfec\",\n    \"name\": \"test-741d229c-e9e5-40dc-bc09-3c64f612c80b\",\n    \"permissions\": [\n        \"SHARE\"\n    ]\n}",
+					"raw": "{\n    \"id\": \"e324aae3-cd9f-4a58-b289-237993d0b8d3\",\n    \"name\": \"test-741d229c-e\",\n    \"permissions\": [\n        \"SHARE\"\n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -81,13 +102,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/groups/bb37ba6c-b49d-4854-90d0-283f14e9bfec",
+					"raw": "{{host}}/v1/groups/e324aae3-cd9f-4a58-b289-237993d0b8d3",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"v1",
 						"groups",
-						"bb37ba6c-b49d-4854-90d0-283f14e9bfec"
+						"e324aae3-cd9f-4a58-b289-237993d0b8d3"
 					]
 				}
 			},
@@ -97,15 +119,22 @@
 			"name": "get by id",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": "{{host}}/groups/bb37ba6c-b49d-4854-90d0-283f14e9bfec",
+					"raw": "{{host}}/v1/groups/8ae48e90-1376-477a-8bfd-3cfc294f90a7",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"v1",
 						"groups",
-						"bb37ba6c-b49d-4854-90d0-283f14e9bfec"
+						"8ae48e90-1376-477a-8bfd-3cfc294f90a7"
 					]
 				}
 			},
@@ -115,10 +144,16 @@
 			"name": "add users to group",
 			"request": {
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "[\"8a666132-6e60-4647-ba33-e4aa85f828ab\", \"9476bc55-7351-4ca0-b70f-dd8c8d0dff51\"]",
+					"raw": "[\"9476bc55-7351-4ca0-b70f-dd8c8d0dff51\"]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -126,13 +161,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/groups/bb37ba6c-b49d-4854-90d0-283f14e9bfec/users/",
+					"raw": "{{host}}/v1/groups/8ae48e90-1376-477a-8bfd-3cfc294f90a7/users/",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"v1",
 						"groups",
-						"bb37ba6c-b49d-4854-90d0-283f14e9bfec",
+						"8ae48e90-1376-477a-8bfd-3cfc294f90a7",
 						"users",
 						""
 					]
