@@ -73,8 +73,14 @@ export class GroupServiceImpl implements GroupService {
     users: Array<string>
   ): Promise<GroupEntityModel> {
     const userModels = await this.personService.getUsers(users);
+    let userIds = userModels ? userModels.map((user: Person) => user.id) : [];
 
-    const userIds = userModels ? userModels.map((user: Person) => user.id) : [];
+    const group = await this.getById(groupId);
+    const usersAlreadyInGroup = group.users;
+    if(usersAlreadyInGroup) {
+      userIds = userIds.filter(userId => usersAlreadyInGroup.indexOf(userId) === -1)
+    }
+
     return this.groupDao.addUsersInGroup(groupId, userIds);
   }
 }
