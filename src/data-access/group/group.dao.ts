@@ -41,7 +41,7 @@ class GroupDaoImpl implements GroupDao {
       return this.getById(groupModel.id);
     });
   }
-  update(group: Group): Promise<void> {
+  async update(group: Group): Promise<void> {
     return sequelize.transaction(async () => {
       const groupModel = await GroupEntity.update(group, {
         where: { id: group.id },
@@ -61,7 +61,7 @@ class GroupDaoImpl implements GroupDao {
   async addUsersInGroup(groupId: string, users: string[]): Promise<GroupEntityModel> {
     const groupModel = await this.getById(groupId);
 
-    await groupModel.setUsers(users);
+    await groupModel.addUsers(users);
     return this.getById(groupId);
   }
 }

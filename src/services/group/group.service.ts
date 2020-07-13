@@ -1,9 +1,11 @@
+import { v4 as uuidv4 } from 'uuid';
 import GroupService from './group.interface';
 import { Group, InternalError, ErrorType, NotFoundError, Person } from '../../models';
 import { GroupDao } from '../../data-access';
 import { PersonService } from '../person';
 import { GroupEntityModel } from '../../data-access/group/group.entity';
 import { PermissionEntityModel } from '../../data-access/permission/permission.entity';
+import { PersonModel } from '../../data-access/person/person.entity';
 
 const convertGroupFromEntity = (group: GroupEntityModel): Group => {
   if (group) {
@@ -11,6 +13,7 @@ const convertGroupFromEntity = (group: GroupEntityModel): Group => {
       id: group.id,
       name: group.name,
       permissions: group.permissions.map((permission: PermissionEntityModel) => permission.value),
+      users: group.users.map((user: PersonModel) => user.login),
     };
   }
   return group;
@@ -41,6 +44,9 @@ export class GroupServiceImpl implements GroupService {
     }
   }
   async create(group: Group): Promise<Group> {
+    if (!group.id) {
+      group.id = uuidv4().toString();
+    }
     const groupEntity = await this.groupDao.create(group);
     return convertGroupFromEntity(groupEntity);
   }
@@ -67,8 +73,14 @@ export class GroupServiceImpl implements GroupService {
     users: Array<string>
   ): Promise<GroupEntityModel> {
     const userModels = await this.personService.getUsers(users);
+    let userIds = userModels ? userModels.map((user: Person) => user.id) : [];
 
-    const userIds = userModels ? userModels.map((user: Person) => user.id) : [];
+    const group = await this.getById(groupId);
+    const usersAlreadyInGroup = group.users;
+    if (usersAlreadyInGroup) {
+      userIds = userIds.filter((userId) => usersAlreadyInGroup.indexOf(userId) === -1);
+    }
+
     return this.groupDao.addUsersInGroup(groupId, userIds);
   }
 }

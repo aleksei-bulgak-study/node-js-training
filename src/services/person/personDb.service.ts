@@ -4,6 +4,16 @@ import { Person, InternalError, ErrorType, NotFoundError } from '../../models';
 import { PersonDao } from '../../data-access';
 import { PersonModel } from '../../data-access/person/person.entity';
 
+const convertPersonFromEntity = (personEntity: PersonModel): Person => {
+  return {
+    id: personEntity.id,
+    login: personEntity.login,
+    password: personEntity.password,
+    age: personEntity.age,
+    isDeleted: personEntity.isDeleted,
+  };
+};
+
 export default class PersonDBService implements PersonService {
   private readonly dao: PersonDao;
 
@@ -35,7 +45,7 @@ export default class PersonDBService implements PersonService {
         if (!personEntity) {
           throw new NotFoundError(`Failed to obtain user with id ${id}`);
         }
-        return personEntity;
+        return convertPersonFromEntity(personEntity);
       } catch {
         throw new NotFoundError(`Failed to obtain user with id ${id}`);
       }
@@ -60,9 +70,8 @@ export default class PersonDBService implements PersonService {
     const personEntity = await this.getById(person.id);
     if (person.login && personEntity.login !== person.login) {
       await this.checkUserValid(person);
-    } else {
-      await this.dao.update(person);
     }
+    await this.dao.update(person);
     return this.getById(person.id);
   }
 
@@ -78,6 +87,19 @@ export default class PersonDBService implements PersonService {
 
   getAutoSuggestUsers(loginSubstring: string, limit: number): Promise<Person[]> {
     return this.dao.find(loginSubstring, limit);
+  }
+
+  async getByLogin(login: string): Promise<Person> {
+    let personModel: PersonModel;
+    try {
+      personModel = await this.dao.findByLogin(login);
+    } catch {
+      throw new NotFoundError(`Failed to obtain user with login ${login}`);
+    }
+    if (!personModel) {
+      throw new NotFoundError(`Failed to obtain user with login ${login}`);
+    }
+    return personModel;
   }
 
   private async checkUserValid(user: Person): Promise<void> {

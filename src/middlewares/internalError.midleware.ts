@@ -14,7 +14,7 @@ const internalError = (
     response.status(404).json({ message: error.message });
     return;
   }
-  return next(error);
+  next(error);
 };
 
 export default internalError;

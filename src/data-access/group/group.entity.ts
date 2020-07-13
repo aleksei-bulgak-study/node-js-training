@@ -1,13 +1,14 @@
 import { DataTypes, Model, BuildOptions } from 'sequelize';
 import { sequelize } from '../../configs';
 import { PermissionEntity, PermissionEntityModel } from '../permission/permission.entity';
-import { PersonEntity } from '../person/person.entity';
+import { PersonEntity, PersonModel } from '../person/person.entity';
 
 export interface GroupEntityModel extends Model {
   readonly id: string;
   readonly name: string;
-  permissions: PermissionEntityModel[];
-  setUsers(users: Array<string>): void;
+  readonly permissions: PermissionEntityModel[];
+  readonly users: PersonModel[];
+  addUsers(users: Array<string>): void;
 }
 
 type GroupEntityModelStatic = typeof Model & {

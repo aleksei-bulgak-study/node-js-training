@@ -1,14 +1,14 @@
+import { PersonEntity } from './person/person.entity';
 import { PersonDaoImpl } from './person/person.dao';
 import PersonDao from './person/personDao.interface';
-import { PersonEntity } from './person/person.entity';
 
+import { GroupEntity } from './group/group.entity';
 import { GroupDaoImpl } from './group/group.dao';
 import GroupDao from './group/groupDao.interface';
-import { GroupEntity } from './group/group.entity';
 
+import { PermissionEntity } from './permission/permission.entity';
 import { PermissionDaoImpl } from './permission/permission.dao';
 import PermissionDao from './permission/permissionDao.interface';
-import { PermissionEntity } from './permission/permission.entity';
 
 export {
   PersonDao,

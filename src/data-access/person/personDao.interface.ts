@@ -1,5 +1,6 @@
 import { Person } from '../../models';
 import { PersonModel } from './person.entity';
+
 export default interface PersonDao {
   getById(id: string): Promise<PersonModel>;
   create(person: Person): Promise<void>;

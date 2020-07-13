@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express';
-import { ObjectSchema } from '@hapi/joi';
+import { ObjectSchema, ArraySchema } from '@hapi/joi';
 import { ErrorType, InternalError } from '../models';
 
 export const validate = <T>(validationSchema: ObjectSchema<T>): RequestHandler => (
@@ -17,5 +17,19 @@ export const validate = <T>(validationSchema: ObjectSchema<T>): RequestHandler =
   if (result.error) {
     return next(new InternalError(result.error.message, ErrorType.BAD_REQUEST));
   }
-  return next();
+  next();
+};
+
+export const validateArray = <T>(validationSchema: ArraySchema): RequestHandler => (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  const entity = req.body;
+
+  const result = validationSchema.validate(entity);
+  if (result.error) {
+    return next(new InternalError(result.error.message, ErrorType.BAD_REQUEST));
+  }
+  next();
 };

@@ -1,6 +1,6 @@
 import { PermissionEntity, PermissionEntityModel } from './permission.entity';
 import { NotFoundError } from '../../models';
-import { PermissionDao } from '..';
+import PermissionDao from './permissionDao.interface';
 
 const processNullableEntity = (result: PermissionEntityModel | null): PermissionEntityModel => {
   if (!result) {
@@ -10,13 +10,14 @@ const processNullableEntity = (result: PermissionEntityModel | null): Permission
 };
 
 export class PermissionDaoImpl implements PermissionDao {
-  getById(id: number): Promise<PermissionEntityModel> {
-    return PermissionEntity.findByPk(id);
+  async getById(id: number): Promise<PermissionEntityModel> {
+    const permission = PermissionEntity.findByPk(id);
+    return processNullableEntity(permission);
   }
 
   async getByName(name: string): Promise<PermissionEntityModel> {
-    const permissions = await PermissionEntity.findOne({ where: { value: name } });
-    return processNullableEntity(permissions);
+    const permission = await PermissionEntity.findOne({ where: { value: name } });
+    return processNullableEntity(permission);
   }
 
   getAllByName(value: string[]): Promise<PermissionEntityModel[]> {

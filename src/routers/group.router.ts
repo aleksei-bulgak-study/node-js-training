@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express';
-import { Group, groupSchema } from '../models';
+import { Group, groupSchema, createGroupSchema, assotiateUserWithGroup } from '../models';
 import asyncMiddleware from '../middlewares/async.middleware';
 import GroupService from '../services/group/group.interface';
-import { validate } from '../middlewares/validation.middleware';
+import { validate, validateArray } from '../middlewares/validation.middleware';
 
 export const GroupRouter = (service: GroupService): Router => {
   const router = Router();
@@ -17,7 +17,7 @@ export const GroupRouter = (service: GroupService): Router => {
 
   router.post(
     '/',
-    validate<Group>(groupSchema),
+    validate<Group>(createGroupSchema),
     asyncMiddleware(async (req: Request, res: Response) => {
       const result = await service.create(req.body);
       res.status(201).json(result);
@@ -53,6 +53,7 @@ export const GroupRouter = (service: GroupService): Router => {
 
   router.put(
     '/:id/users',
+    validateArray(assotiateUserWithGroup),
     asyncMiddleware(async (req: Request, res: Response) => {
       const groupId = req.params.id;
       const users = req.body;
@@ -63,5 +64,3 @@ export const GroupRouter = (service: GroupService): Router => {
 
   return router;
 };
-
-export default GroupRouter;
