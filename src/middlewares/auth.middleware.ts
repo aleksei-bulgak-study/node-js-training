@@ -1,21 +1,25 @@
 import { NextFunction, Request, Response } from 'express';
 import { AuthService } from '../services';
 import { InternalError, ErrorType } from '../models';
+import { loggerService } from '../configs';
 
 const authMiddleware = (service: AuthService) => (
   request: Request,
   response: Response,
   next: NextFunction
-): Promise<void> => {
+): void => {
   const authHeader = request.headers.authorization;
   console.log('header', authHeader);
   if (!authHeader) {
-    return Promise.resolve(next(new InternalError('Authorization failed', ErrorType.UNAUTHORIZED)));
+    return next(new InternalError('Authorization failed', ErrorType.UNAUTHORIZED));
   }
-  return service
-    .validateToken(authHeader)
-    .then(() => next())
-    .catch(() => next(new InternalError('Access forbidden', ErrorType.FORBIDDEN)));
+  try {
+    service.validateToken(authHeader);
+    return next();
+  } catch (e) {
+    loggerService.error('Error was thrown during auth process', e);
+    return next(new InternalError('Access forbidden', ErrorType.FORBIDDEN));
+  }
 };
 
 export default authMiddleware;

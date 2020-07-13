@@ -31,7 +31,7 @@ class GroupDaoImpl implements GroupDao {
       include: [PermissionEntity, PersonEntity],
     });
   }
-  async create(group: Group): Promise<GroupEntityModel> {
+  create(group: Group): Promise<GroupEntityModel> {
     return sequelize.transaction(async () => {
       const groupModel = await GroupEntity.create(group);
       const permissions = await this.permissionDao.getAllByName(group.permissions);
