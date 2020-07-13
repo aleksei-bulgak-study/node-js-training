@@ -8,7 +8,7 @@ export interface GroupEntityModel extends Model {
   readonly name: string;
   readonly permissions: PermissionEntityModel[];
   readonly users: PersonModel[];
-  setUsers(users: Array<string>): void;
+  addUsers(users: Array<string>): void;
 }
 
 type GroupEntityModelStatic = typeof Model & {

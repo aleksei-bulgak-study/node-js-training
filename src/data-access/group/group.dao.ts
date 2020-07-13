@@ -61,7 +61,7 @@ class GroupDaoImpl implements GroupDao {
   async addUsersInGroup(groupId: string, users: string[]): Promise<GroupEntityModel> {
     const groupModel = await this.getById(groupId);
 
-    await groupModel.setUsers(users);
+    await groupModel.addUsers(users);
     return this.getById(groupId);
   }
 }

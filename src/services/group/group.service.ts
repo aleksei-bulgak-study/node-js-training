@@ -5,6 +5,7 @@ import { GroupDao } from '../../data-access';
 import { PersonService } from '../person';
 import { GroupEntityModel } from '../../data-access/group/group.entity';
 import { PermissionEntityModel } from '../../data-access/permission/permission.entity';
+import { PersonModel } from '../../data-access/person/person.entity';
 
 const convertGroupFromEntity = (group: GroupEntityModel): Group => {
   if (group) {
@@ -12,6 +13,7 @@ const convertGroupFromEntity = (group: GroupEntityModel): Group => {
       id: group.id,
       name: group.name,
       permissions: group.permissions.map((permission: PermissionEntityModel) => permission.value),
+      users: group.users.map((user: PersonModel) => user.login),
     };
   }
   return group;
@@ -42,7 +44,7 @@ export class GroupServiceImpl implements GroupService {
     }
   }
   async create(group: Group): Promise<Group> {
-    if(!group.id) {
+    if (!group.id) {
       group.id = uuidv4().toString();
     }
     const groupEntity = await this.groupDao.create(group);
@@ -75,8 +77,8 @@ export class GroupServiceImpl implements GroupService {
 
     const group = await this.getById(groupId);
     const usersAlreadyInGroup = group.users;
-    if(usersAlreadyInGroup) {
-      userIds = userIds.filter(userId => usersAlreadyInGroup.indexOf(userId) === -1)
+    if (usersAlreadyInGroup) {
+      userIds = userIds.filter((userId) => usersAlreadyInGroup.indexOf(userId) === -1);
     }
 
     return this.groupDao.addUsersInGroup(groupId, userIds);

@@ -70,9 +70,8 @@ export default class PersonDBService implements PersonService {
     const personEntity = await this.getById(person.id);
     if (person.login && personEntity.login !== person.login) {
       await this.checkUserValid(person);
-    } else {
-      await this.dao.update(person);
     }
+    await this.dao.update(person);
     return this.getById(person.id);
   }
 
