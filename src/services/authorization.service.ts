@@ -17,20 +17,14 @@ export class AuthService {
   }
 
   public async generateToken(credentials: AuthRequest): Promise<AuthToken> {
-      const person = await this.personService.getByLogin(credentials.login);
-      if (person.isDeleted) {
-        throw new InternalError(
-          'User with deleted status can not logged in',
-          ErrorType.BAD_REQUEST
-        );
-      }
-      if (person.password !== credentials.password) {
-        throw new InternalError(
-          'Invalid username or password was specified',
-          ErrorType.BAD_REQUEST
-        );
-      }
-      return this.buildToken(person);
+    const person = await this.personService.getByLogin(credentials.login);
+    if (person.isDeleted) {
+      throw new InternalError('User with deleted status can not logged in', ErrorType.BAD_REQUEST);
+    }
+    if (person.password !== credentials.password) {
+      throw new InternalError('Invalid username or password was specified', ErrorType.BAD_REQUEST);
+    }
+    return this.buildToken(person);
   }
 
   public validateToken(token: string): void {

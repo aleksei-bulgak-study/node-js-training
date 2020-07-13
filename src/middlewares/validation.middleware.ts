@@ -33,5 +33,3 @@ export const validateArray = <T>(validationSchema: ArraySchema): RequestHandler 
   }
   return next();
 };
-
-
