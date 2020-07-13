@@ -35,8 +35,15 @@ jest.mock('../../src/data-access/person/person.entity', () => {
     age: 33,
     isDeleted: false,
   };
+  const newUser = {
+    login: 'new-user@gmail.com',
+    password: 'password123',
+    isDeleted: false,
+    age: 12,
+  };
   const db = new SequelizeMock();
   const PersonEntity = db.define('user', existing, { tableName: 'users', timestamps: false });
+  PersonEntity.findByPk = (id, opts) => PersonEntity.findById(id, opts);
   PersonEntity.$queryInterface.$useHandler(function (query, queryOptions, done) {
     if (query === 'findOne') {
       if (queryOptions[0].where.login === existing.login) {
@@ -53,6 +60,9 @@ jest.mock('../../src/data-access/person/person.entity', () => {
       } else {
         return null;
       }
+    }
+    if (query === 'findById') {
+      return PersonEntity.build(newUser);
     }
   });
 
@@ -82,7 +92,7 @@ describe('person router', () => {
     test('getUsers', async () => {
       await request(app)
         .get('/v2/users')
-        .set({ Authorization: authToken })
+        .set({ Authorization: `Bearer ${authToken}` })
         .expect(200)
         .then((response) => {
           expect(response.body).toEqual([
@@ -117,7 +127,7 @@ describe('person router', () => {
       };
       await request(app)
         .post('/v2/users')
-        .set({ Authorization: authToken })
+        .set({ Authorization: `Bearer ${authToken}` })
         .set({ 'Content-Type': 'application/json' })
         .send(newUser)
         .expect(201)
@@ -138,7 +148,7 @@ describe('person router', () => {
       };
       await request(app)
         .post('/v2/users')
-        .set({ Authorization: authToken })
+        .set({ Authorization: `Bearer ${authToken}` })
         .set({ 'Content-Type': 'application/json' })
         .send(newUser)
         .expect(400)

@@ -46,8 +46,8 @@ export default class PersonDBService implements PersonService {
           throw new NotFoundError(`Failed to obtain user with id ${id}`);
         }
         return convertPersonFromEntity(personEntity);
-      } catch {
-        throw new NotFoundError(`Failed to obtain user with id ${id}`);
+      } catch (e) {
+        throw new NotFoundError(`Failed to obtain user with id ${id} ${e}`);
       }
     }
     throw new InternalError('Invalid id was specified', ErrorType.NOT_FOUND);
