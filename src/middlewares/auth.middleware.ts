@@ -9,7 +9,6 @@ const authMiddleware = (service: AuthService) => (
   next: NextFunction
 ): void => {
   const authHeader = request.headers.authorization;
-  console.log('header', authHeader);
   if (!authHeader) {
     return next(new InternalError('Authorization failed', ErrorType.UNAUTHORIZED));
   }

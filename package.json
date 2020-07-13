@@ -5,11 +5,11 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint ./src --ext .js,.ts",
-    "lint:ts": "eslint -c .eslintrc.ts.json **/*.ts",
+    "lint:ts": "eslint -c .eslintrc.ts.json ./src/**/*.ts",
     "build:ts:watch": "tsc --build --watch tsconfig.json",
-    "build": "babel --extensions '.ts' ./src -d dist",
-    "build:watch": "babel --watch --extensions '.ts' ./src -d dist",
-    "start": "nodemon --exec babel-node --extensions '.ts' ./src/index.ts"
+    "build": "babel ./src --out-dir dist --extensions .ts",
+    "build:watch": "babel-node --extensions  \".ts\"",
+    "start": "nodemon --exec babel-node ./src/index.ts --extensions \".ts\""
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
@@ -30,6 +30,7 @@
     "@babel/node": "^7.8.7",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.9.6",
+    "@babel/plugin-transform-typescript": "^7.10.4",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-typescript": "^7.9.0",
     "@types/cors": "^2.8.6",
