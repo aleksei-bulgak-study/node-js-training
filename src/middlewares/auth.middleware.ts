@@ -14,10 +14,10 @@ const authMiddleware = (service: AuthService) => (
   }
   try {
     service.validateToken(authHeader);
-    return next();
+    next();
   } catch (e) {
     loggerService.error('Error was thrown during auth process', e);
-    return next(new InternalError('Access forbidden', ErrorType.FORBIDDEN));
+    next(new InternalError('Access forbidden', ErrorType.FORBIDDEN));
   }
 };
 

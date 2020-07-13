@@ -17,7 +17,7 @@ export const validate = <T>(validationSchema: ObjectSchema<T>): RequestHandler =
   if (result.error) {
     return next(new InternalError(result.error.message, ErrorType.BAD_REQUEST));
   }
-  return next();
+  next();
 };
 
 export const validateArray = <T>(validationSchema: ArraySchema): RequestHandler => (
@@ -31,5 +31,5 @@ export const validateArray = <T>(validationSchema: ArraySchema): RequestHandler 
   if (result.error) {
     return next(new InternalError(result.error.message, ErrorType.BAD_REQUEST));
   }
-  return next();
+  next();
 };

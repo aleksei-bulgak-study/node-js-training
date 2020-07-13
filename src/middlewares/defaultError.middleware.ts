@@ -12,5 +12,5 @@ export default (logger: LoggerService): ErrorRequestHandler => (
     response.status(500).json({ message: error.message });
     return;
   }
-  return next(error);
+  next(error);
 };
