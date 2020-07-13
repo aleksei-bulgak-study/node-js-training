@@ -12,12 +12,13 @@ import GroupService from '../../src/services/group/group.interface';
 jest.mock('../../src/services/group/group.service.ts');
 jest.mock('../../src/configs/logger');
 
-describe('Person router', () => {
+describe('Group router', () => {
   const id = uuidv4();
   const group: Group = {
     id: id,
     name: 'test group name',
     permissions: ['READ', 'WRITE', 'DELETE', 'SHARE', 'UPLOAD_FILES'],
+    users: [],
   };
 
   let app: express.Express;
