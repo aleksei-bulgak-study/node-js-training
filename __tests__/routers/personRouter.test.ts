@@ -11,7 +11,7 @@ import { loggerService } from '../../src/configs/logger';
 jest.mock('../../src/services/person/person.service');
 jest.mock('../../src/configs/logger');
 
-describe('Person router', () => {
+describe('Person router instance', () => {
   const id = uuidv4();
   const person: Person = {
     id: id,
@@ -39,8 +39,8 @@ describe('Person router', () => {
     jest.resetAllMocks();
   });
 
-  describe('find by id', () => {
-    test('success case', async () => {
+  describe('when find by id operation is called', () => {
+    test('should return user model', async () => {
       //given
       personService.getById.mockImplementationOnce(() => Promise.resolve(person));
 
@@ -55,7 +55,7 @@ describe('Person router', () => {
       expect(personService.getById.mock.calls[0][0]).toEqual(id);
     });
 
-    test('when service throws exception', async () => {
+    test('should return exception if service failed', async () => {
       //given
       const id = 'test id';
       personService.getById.mockImplementationOnce(() =>
@@ -72,8 +72,8 @@ describe('Person router', () => {
     });
   });
 
-  describe('get all', () => {
-    test('success case', async () => {
+  describe('when get all users operation is called', () => {
+    test('should return list of all users', async () => {
       //given
       const people: Array<Person> = [person];
       personService.getAutoSuggestUsers.mockImplementationOnce(() => Promise.resolve(people));
@@ -89,7 +89,7 @@ describe('Person router', () => {
       expect(personService.getAutoSuggestUsers.mock.calls[0][1]).toEqual(NaN);
     });
 
-    test('success case with limit value passed', async () => {
+    test('should return first 10 users', async () => {
       //given
       const people: Array<Person> = [person];
       personService.getAutoSuggestUsers.mockImplementationOnce(() => Promise.resolve(people));
@@ -106,7 +106,7 @@ describe('Person router', () => {
       expect(personService.getAutoSuggestUsers.mock.calls[0][1]).toEqual(10);
     });
 
-    test('success case with search string', async () => {
+    test('should return users with login constaining "test"', async () => {
       //given
       const people: Array<Person> = [person];
       personService.getAutoSuggestUsers.mockImplementationOnce(() => Promise.resolve(people));
@@ -123,7 +123,7 @@ describe('Person router', () => {
       expect(personService.getAutoSuggestUsers.mock.calls[0][1]).toEqual(NaN);
     });
 
-    test('success case with invalid limit value', async () => {
+    test('should return list of all users if limit argument is invalid', async () => {
       //given
       const people: Array<Person> = [person];
       personService.getAutoSuggestUsers.mockImplementationOnce(() => Promise.resolve(people));
@@ -141,8 +141,8 @@ describe('Person router', () => {
     });
   });
 
-  describe('create person', () => {
-    test('success case', async () => {
+  describe('when create operation is called', () => {
+    test('should return created user model', async () => {
       //given
       personService.create.mockImplementationOnce(() => Promise.resolve(person));
       //when
@@ -158,7 +158,7 @@ describe('Person router', () => {
       expect(personService.create.mock.calls[0][0]).toEqual(person);
     });
 
-    test('when id is invalid uuid', async () => {
+    test('should return error when invalid id specified', async () => {
       //given
       const invalidRequest = { ...person, id: 'invalid id' };
       //when
@@ -174,7 +174,7 @@ describe('Person router', () => {
       expect(personService.create).not.toHaveBeenCalled();
     });
 
-    test('when login is invalid', async () => {
+    test('should return error when invalid login was specified', async () => {
       //given
       const invalidRequest = { ...person, login: 123 };
       //when
@@ -190,7 +190,7 @@ describe('Person router', () => {
       expect(personService.create).not.toHaveBeenCalled();
     });
 
-    test('when password is invalid', async () => {
+    test('should return error if invalid password was specified', async () => {
       //given
       const invalidRequest = { ...person, password: 'invalid password' };
       //when
@@ -208,7 +208,7 @@ describe('Person router', () => {
       expect(personService.create).not.toHaveBeenCalled();
     });
 
-    test('when age less then 4', async () => {
+    test('should return error if age less then 4 years', async () => {
       //given
       const invalidRequest = { ...person, age: 3 };
       //when
@@ -224,7 +224,7 @@ describe('Person router', () => {
       expect(personService.create).not.toHaveBeenCalled();
     });
 
-    test('when age larger then 130', async () => {
+    test('should return error when age larger then 130', async () => {
       //given
       const invalidRequest = { ...person, age: 131 };
       //when
@@ -241,8 +241,8 @@ describe('Person router', () => {
     });
   });
 
-  describe('delete', () => {
-    test('success case', async () => {
+  describe('when delete user operation is called', () => {
+    test('should remove user', async () => {
       //given
       personService.delete.mockImplementationOnce(() => Promise.resolve(person));
       //when
@@ -253,7 +253,7 @@ describe('Person router', () => {
       expect(personService.delete.mock.calls[0][0]).toEqual(id);
     });
 
-    test('when service throw not found exception', async () => {
+    test('should return error if person service failed', async () => {
       //given
       personService.delete.mockImplementationOnce(() =>
         Promise.reject(new InternalError('test', ErrorType.NOT_FOUND))
@@ -268,8 +268,8 @@ describe('Person router', () => {
     });
   });
 
-  describe('update', () => {
-    test('success case', async () => {
+  describe('when update user is called', () => {
+    test('should return updated user', async () => {
       //given
       personService.update.mockImplementationOnce(() => Promise.resolve(person));
       //when
@@ -285,7 +285,7 @@ describe('Person router', () => {
       expect(personService.update.mock.calls[0][0]).toEqual(person);
     });
 
-    test('when login is invalid', async () => {
+    test('should return error if login is invalid', async () => {
       //given
       const invalidRequest = { ...person, login: 123 };
       //when
@@ -301,7 +301,7 @@ describe('Person router', () => {
       expect(personService.update).not.toHaveBeenCalled();
     });
 
-    test('when password is invalid', async () => {
+    test('should return error if password is invalid', async () => {
       //given
       const invalidRequest = { ...person, password: 'invalid password' };
       //when
@@ -319,7 +319,7 @@ describe('Person router', () => {
       expect(personService.update).not.toHaveBeenCalled();
     });
 
-    test('when age less then 4', async () => {
+    test('should return error when age less then 4', async () => {
       //given
       const invalidRequest = { ...person, age: 3 };
       //when
@@ -335,7 +335,7 @@ describe('Person router', () => {
       expect(personService.update).not.toHaveBeenCalled();
     });
 
-    test('when age larger then 130', async () => {
+    test('should return error when age larger then 130', async () => {
       //given
       const invalidRequest = { ...person, age: 131 };
       //when

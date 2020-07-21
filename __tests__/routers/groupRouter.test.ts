@@ -12,7 +12,7 @@ import GroupService from '../../src/services/group/group.interface';
 jest.mock('../../src/services/group/group.service.ts');
 jest.mock('../../src/configs/logger');
 
-describe('Group router', () => {
+describe('Group router instance', () => {
   const id = uuidv4();
   const group: Group = {
     id: id,
@@ -39,8 +39,8 @@ describe('Group router', () => {
     jest.resetAllMocks();
   });
 
-  describe('get by id', () => {
-    test('success case', async () => {
+  describe('when get by id is called', () => {
+    test('should return group model', async () => {
       //given
       groupService.getById.mockImplementationOnce(() => Promise.resolve(group));
       //when
@@ -52,7 +52,7 @@ describe('Group router', () => {
       expect(groupService.getById.mock.calls[0][0]).toEqual(id);
     });
 
-    test('when not found exception thrown', async () => {
+    test('should return error if invalid id specified', async () => {
       //given
       groupService.getById.mockImplementationOnce(() =>
         Promise.reject(new InternalError('test', ErrorType.NOT_FOUND))
@@ -67,8 +67,8 @@ describe('Group router', () => {
     });
   });
 
-  describe('create', () => {
-    test('success case', async () => {
+  describe('when create group operation is called', () => {
+    test('should return created group', async () => {
       //given
       groupService.create.mockImplementationOnce(() => Promise.resolve(group));
       //when
@@ -81,7 +81,7 @@ describe('Group router', () => {
       expect(groupService.create.mock.calls[0][0]).toEqual(group);
     });
 
-    test('invalid permission specified', async () => {
+    test('should return error if invalid permission specified', async () => {
       //given
       const invalidGroup = { ...group, permission: [...group.permissions, 'invalid'] };
       groupService.create.mockImplementationOnce(() => Promise.resolve(group));
@@ -95,7 +95,7 @@ describe('Group router', () => {
       expect(groupService.create).not.toHaveBeenCalled();
     });
 
-    test('name missed', async () => {
+    test('should return error if name missed', async () => {
       //given
       const invalidGroup = { ...group, name: undefined };
       groupService.create.mockImplementationOnce(() => Promise.resolve(group));
@@ -109,7 +109,7 @@ describe('Group router', () => {
       expect(groupService.create).not.toHaveBeenCalled();
     });
 
-    test('permissions is empty', async () => {
+    test('should return error if permissions list is empty', async () => {
       //given
       const invalidGroup = { ...group, permissions: [] };
       groupService.create.mockImplementationOnce(() => Promise.resolve(group));
@@ -125,7 +125,7 @@ describe('Group router', () => {
       expect(groupService.create).not.toHaveBeenCalled();
     });
 
-    test('permissions contains duplicates', async () => {
+    test('should return error if permissions list contains duplicates', async () => {
       //given
       const invalidGroup = { ...group, permissions: ['READ', 'READ'] };
       groupService.create.mockImplementationOnce(() => Promise.resolve(group));
@@ -142,8 +142,8 @@ describe('Group router', () => {
     });
   });
 
-  describe('update', () => {
-    test('success case', async () => {
+  describe('when update group operation is called', () => {
+    test('should return updated group', async () => {
       //given
       groupService.update.mockImplementationOnce(() => Promise.resolve(group));
       //when
@@ -156,7 +156,7 @@ describe('Group router', () => {
       expect(groupService.update.mock.calls[0][0]).toEqual(group);
     });
 
-    test('invalid permission specified', async () => {
+    test('should return error if invalid permission specified', async () => {
       //given
       const invalidGroup = { ...group, permission: [...group.permissions, 'invalid'] };
       //when
@@ -169,7 +169,7 @@ describe('Group router', () => {
       expect(groupService.update).not.toHaveBeenCalled();
     });
 
-    test('name missed', async () => {
+    test('should return error if name was missed', async () => {
       //given
       const invalidGroup = { ...group, name: undefined };
       //when
@@ -182,7 +182,7 @@ describe('Group router', () => {
       expect(groupService.update).not.toHaveBeenCalled();
     });
 
-    test('permissions is empty', async () => {
+    test('should return error if permissions list is empty', async () => {
       //given
       const invalidGroup = { ...group, permissions: [] };
       //when
@@ -197,7 +197,7 @@ describe('Group router', () => {
       expect(groupService.update).not.toHaveBeenCalled();
     });
 
-    test('permissions contains duplicates', async () => {
+    test('should return error if permissions list contains duplicates', async () => {
       //given
       const invalidGroup = { ...group, permissions: ['READ', 'READ'] };
       //when
@@ -213,8 +213,8 @@ describe('Group router', () => {
     });
   });
 
-  describe('delete', () => {
-    test('success case', async () => {
+  describe('when delete group operation is called', () => {
+    test('should remove group', async () => {
       //given
       groupService.delete.mockImplementationOnce(() => Promise.resolve());
       //when
@@ -227,8 +227,8 @@ describe('Group router', () => {
     });
   });
 
-  describe('get all', () => {
-    test('success case', async () => {
+  describe('when get all groups operation is called', () => {
+    test('should return list of groups', async () => {
       //given
       groupService.getAll.mockImplementationOnce(() => Promise.resolve([group]));
       //when
@@ -241,8 +241,8 @@ describe('Group router', () => {
     });
   });
 
-  describe('add users to group', () => {
-    test('success case', async () => {
+  describe('when add users in group is called', () => {
+    test('should update users-group assotication', async () => {
       //given
       const userIds = [uuidv4(), uuidv4()];
       groupService.updateUserGroupAssociation.mockImplementationOnce(() => Promise.resolve(group));

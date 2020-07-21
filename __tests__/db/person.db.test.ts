@@ -72,7 +72,7 @@ jest.mock('../../src/data-access/person/person.entity', () => {
 });
 server.close();
 
-describe('person router', () => {
+describe('PersonRouter instance', () => {
   let authToken = '';
   beforeEach(async () => {
     await request(app)
@@ -88,8 +88,8 @@ describe('person router', () => {
       });
   });
 
-  describe('getUsers', () => {
-    test('getUsers', async () => {
+  describe('when getUsers operation is called', () => {
+    test('should return list of users', async () => {
       await request(app)
         .get('/v2/users')
         .set({ Authorization: `Bearer ${authToken}` })
@@ -107,7 +107,7 @@ describe('person router', () => {
         });
     });
 
-    test('getUsers without token expect error', async () => {
+    test('should return 401 error when auth token is missed', async () => {
       await request(app)
         .get('/v2/users')
         .expect(401)
@@ -117,8 +117,8 @@ describe('person router', () => {
     });
   });
 
-  describe('Create user', () => {
-    test('success case', async () => {
+  describe('when createUsers operation is called', () => {
+    test('should create user and user model returned', async () => {
       const newUser = {
         login: 'new-user@gmail.com',
         password: 'password123',
@@ -139,7 +139,7 @@ describe('person router', () => {
         });
     });
 
-    test('invalid login', async () => {
+    test('should return error if invalid login specified', async () => {
       const newUser = {
         login: 'new user',
         password: 'password123',
