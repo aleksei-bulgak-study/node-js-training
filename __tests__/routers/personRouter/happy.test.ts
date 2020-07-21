@@ -2,25 +2,16 @@ import request from 'supertest';
 import PersonService from '../../../src/services/person/person.service';
 import { PersonRouter } from '../../../src/routers/person.router';
 import { Router } from 'express';
-import { Person, InternalError, ErrorType } from '../../../src/models';
+import { Person } from '../../../src/models';
 import express from 'express';
-import { v4 as uuidv4 } from 'uuid';
 import { internalErrorMidleware, defaultErrorMiddleware } from '../../../src/middlewares';
 import { loggerService } from '../../../src/configs/logger';
+import { id, person } from './fixtures/user';
 
 jest.mock('../../../src/services/person/person.service');
 jest.mock('../../../src/configs/logger');
 
 describe('Person router instance', () => {
-  const id = uuidv4();
-  const person: Person = {
-    id: id,
-    login: 'test login',
-    password: 'testpassword123',
-    age: 33,
-    isDeleted: false,
-  };
-
   let app: express.Express;
   let personService: jest.Mocked<PersonService>;
   let personRouter: Router;

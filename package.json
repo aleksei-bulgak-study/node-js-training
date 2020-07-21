@@ -10,7 +10,7 @@
     "build": "babel ./src --out-dir dist --extensions .ts",
     "build:watch": "babel-node --extensions  \".ts\"",
     "start": "nodemon --exec babel-node ./src/index.ts --extensions \".ts\"",
-    "test": "jest --coverage --watch"
+    "test": "jest --coverage --watch --config jest.config.js"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",

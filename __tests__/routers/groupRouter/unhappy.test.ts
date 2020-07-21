@@ -2,25 +2,17 @@ import request from 'supertest';
 import { GroupServiceImpl } from '../../../src/services/group/group.service';
 import { GroupRouter } from '../../../src/routers/group.router';
 import { Router } from 'express';
-import { Group, InternalError, ErrorType } from '../../../src/models';
+import { InternalError, ErrorType } from '../../../src/models';
 import express from 'express';
-import { v4 as uuidv4 } from 'uuid';
 import { internalErrorMidleware, defaultErrorMiddleware } from '../../../src/middlewares';
 import { loggerService } from '../../../src/configs/logger';
 import GroupService from '../../../src/services/group/group.interface';
+import { id, group } from './fixtures/group';
 
 jest.mock('../../../src/services/group/group.service.ts');
 jest.mock('../../../src/configs/logger');
 
 describe('Group router instance', () => {
-  const id = uuidv4();
-  const group: Group = {
-    id: id,
-    name: 'test group name',
-    permissions: ['READ', 'WRITE', 'DELETE', 'SHARE', 'UPLOAD_FILES'],
-    users: [],
-  };
-
   let app: express.Express;
   let groupService: jest.Mocked<GroupService>;
   let groupRouter: Router;
