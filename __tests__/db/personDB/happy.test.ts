@@ -1,15 +1,15 @@
 import request from 'supertest';
-import { app, server } from '../../src/index';
-import LoggerService from '../../src/configs/logger';
-import '../../src/configs/database';
-import '../../src/data-access/person/person.entity';
+import { app, server } from '../../../src/index';
+import LoggerService from '../../../src/configs/logger';
+import '../../../src/configs/database';
+import '../../../src/data-access/person/person.entity';
 
-jest.mock('../../src/configs/logger', () => ({
+jest.mock('../../../src/configs/logger', () => ({
   __esModule: true,
   winstonMiddleware: (req, res, next) => next(),
 }));
-jest.mock('../../src/configs/database');
-jest.mock('../../src/configs', () => {
+jest.mock('../../../src/configs/database');
+jest.mock('../../../src/configs', () => {
   const SequelizeMock = require('sequelize-mock');
   const db = new SequelizeMock();
   const loggerService: LoggerService = {
@@ -26,7 +26,7 @@ jest.mock('../../src/configs', () => {
     jwtSecret: 'test',
   };
 });
-jest.mock('../../src/data-access/person/person.entity', () => {
+jest.mock('../../../src/data-access/person/person.entity', () => {
   const SequelizeMock = require('sequelize-mock');
   const existing = {
     id: 'testId',
@@ -106,15 +106,6 @@ describe('PersonRouter instance', () => {
           ]);
         });
     });
-
-    test('should return 401 error when auth token is missed', async () => {
-      await request(app)
-        .get('/v2/users')
-        .expect(401)
-        .then((response) => {
-          expect(response.body).toEqual({ message: 'Authorization failed' });
-        });
-    });
   });
 
   describe('when createUsers operation is called', () => {
@@ -137,24 +128,6 @@ describe('PersonRouter instance', () => {
           expect(response.body.isDeleted).toEqual(newUser.isDeleted);
           expect(response.body.age).toEqual(newUser.age);
         });
-    });
-
-    test('should return error if invalid login specified', async () => {
-      const newUser = {
-        login: 'new user',
-        password: 'password123',
-        isDeleted: false,
-        age: -5,
-      };
-      await request(app)
-        .post('/v2/users')
-        .set({ Authorization: `Bearer ${authToken}` })
-        .set({ 'Content-Type': 'application/json' })
-        .send(newUser)
-        .expect(400)
-        .then((response) =>
-          expect(response.body).toEqual({ message: '"age" must be larger than or equal to 4' })
-        );
     });
   });
 });
