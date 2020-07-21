@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { AuthService } from '../services';
 import { InternalError, ErrorType } from '../models';
-import { loggerService } from '../configs';
+import { loggerService } from '../configs/logger';
 
 const authMiddleware = (service: AuthService) => (
   request: Request,

@@ -48,7 +48,7 @@ app.use('/login', authRouter);
 app.use(securedRoutes);
 app.use(notFoundMiddleware);
 app.use(...errorHandlers);
-app.listen(port);
+const server = app.listen(port);
 
 process.on('uncaughtException', (err) => {
   loggerService.error('Uncaught exception was thrown due to', err);
@@ -58,3 +58,5 @@ process.on('uncaughtException', (err) => {
 process.on('unhandledRejection', () => {
   loggerService.error('Unhandler rejection error was thrown due to');
 });
+
+export { app, server };
